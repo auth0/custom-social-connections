@@ -12,9 +12,6 @@
               <td width="40%">
                   { this.props.name }
               </td>
-              <td width="10%">
-                  { this.props.content }
-              </td>
           </tr>
       );
     }

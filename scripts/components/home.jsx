@@ -20,10 +20,9 @@
 	},
 	render: function() {
 		var rows = this.state.connections.map(function (connection) {
-			return ( <AuthConnectionRow name={connection.name} strategy={connection.strategy} content=""></AuthConnectionRow>);
+			return ( <AuthConnectionRow name={connection.name} strategy={connection.strategy}></AuthConnectionRow>);
 		});
 		return (
-			
 			<div className="container">
 				<div className="row">
 				  	<div className="col-md-8 col-md-offset-2">
