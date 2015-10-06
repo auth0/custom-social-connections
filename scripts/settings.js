@@ -1,2 +1,2 @@
-﻿var AUTH_CONNECTION_API = "https://mcastany.auth0.com/api/connections/";
-var AUTH_TOKEN = 'kBgEjr6fHt5GBUWrhSN1omJ4Rv9pV27aOwIRzZqHkCAvWSCdH5ZF64aVB4tjNGTt';
+﻿var AUTH_CONNECTION_API = "https://mcastany.auth0.com/api/v2/connections";
+var AUTH_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIyQXlrdXB2U0RnVElhSXo3YXBhTlRCbjhSNmNBRFdqMSIsInNjb3BlcyI6eyJjb25uZWN0aW9ucyI6eyJhY3Rpb25zIjpbInJlYWQiXX19LCJpYXQiOjE0NDQxNDAwMjgsImp0aSI6ImQ5NmUwNGE2ZTVmMjhkMDExNjQ1MTQ3YmZmOTI4ZDFjIn0.g1V_yqgc1H_l2B18iUm26qOKL03PWN3BLFTk76ywkgA';
