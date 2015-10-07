@@ -29,8 +29,8 @@ Connection.prototype.create = function (data, callback, errorCallback) {
     this._request("POST", this.apiBaseUrl, data, callback, errorCallback);
 };
 
-Connection.prototype.update = function (data, callback, errorCallback) {
-    this._request("PATCH", this.apiBaseUrl + "/" + data.id, data, callback, errorCallback);        
+Connection.prototype.update = function (id, data, callback, errorCallback) {
+    this._request("PATCH", this.apiBaseUrl + "/" + id, data, callback, errorCallback);        
 };
 
 Connection.prototype.delete = function (name, callback, errorCallback) {
