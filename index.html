@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Custom Connection Dashboard</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" >
+	<style>
+		tr.active {
+			border-left: 3px solid green;
+		}
+	</style>
 </head>
 <body>
     <div id="content"></div>
@@ -16,6 +22,8 @@
 	<script src="http://fb.me/JSXTransformer-0.13.1.js"></script>
 
 	<script src="scripts/settings.js"> </script>
+	<script type="text/jsx" src="scripts/components/previewConnection.jsx"> </script>
+	<script type="text/jsx" src="scripts/components/editConnection.jsx"> </script>
 	<script type="text/jsx" src="scripts/components/authConnections.jsx"> </script>
 	<script type="text/jsx" src="scripts/components/home.jsx"> </script>
 	<script type="text/jsx" src="scripts/app.jsx"> </script>
