@@ -14,23 +14,30 @@
 			function(xhr, err, st){console.log(err);}
 		);
 	},
-	onRowSelected : function(name){
+	onRowSelected : function(id){
 		this.setState({
-			selectedConnection: this.state.connections.filter(function(el){ return el.name === name})[0],
+			selectedConnection: this.state.connections.filter(function(el){ return el.id === id})[0],
 			editMode : false
 		});
+		$(this.refs.modal.getDOMNode()).modal(); 
 	},
-	onEdit: function(name){
+	onEdit: function(id){
+		var selectedConnection = this.state.connections.filter(function(el){ return el.id === id})[0];
+		this.setState({ selectedConnection: selectedConnection, editMode : true });
+		$(this.refs.modal.getDOMNode()).modal(); 
+	},
+	onAddComplete: function(connection){
 		this.setState({
-			selectedConnection: this.state.connections.filter(function(el){ return el.name === name})[0],
-			editMode : true
+			connections : this.state.connections.push(connection),
+			editMode : false,
+			selectedConnection : null
 		});
 	},
-	onSaveComplete: function(oldName, updatedConnection){
+	onSaveComplete: function(id, updatedConnection){
 		var self = this;
 		this.setState({
 			connections : this.state.connections.map(function(connection){
-				if (connection.name === oldName){
+				if (connection.id === id){
 					connection = updatedConnection;
 				}
 				
@@ -40,8 +47,16 @@
 			selectedConnection : null
 		});
 	},
-	onDelete: function(name){
-	
+	onDeleteComplete: function(name){
+		this.setState({
+			connections : this.state.connections.filter(function(connection){ return connection.id !== id; }),
+			editMode : false,
+			selectedConnection : null
+		});
+	},
+	close: function(){
+		$(this.refs.modal.getDOMNode()).modal('hide'); 		
+		this.setState({editMode : false, selectedConnection : null});
 	},
 	render: function() {
 		var that = this;	
@@ -49,14 +64,17 @@
 			return ( <AuthConnectionRow  
 						selected={that.onRowSelected}
 						edit={that.onEdit}
-						remove={that.onDelete}
+						remove={that.onDeleteComplete}
+						id={connection.id}
 						name={connection.name} 
 						strategy={connection.strategy} />);
 		});
 
-		var showTemplate = ( <PreviewConnection selectedConnection={this.state.selectedConnection} />);
+		var showTemplate = ( <PreviewConnection selectedConnection={this.state.selectedConnection} closeHandler={this.close} />),
+			header = 'View';
 		if (this.state.editMode){
-			showTemplate = (<EditConnection selectedConnection={this.state.selectedConnection} onSaveComplete={this.onSaveComplete} />);
+			showTemplate = (<EditConnection selectedConnection={this.state.selectedConnection} closeHandler={this.close} onSaveComplete={this.onSaveComplete} />);
+			header = 'Edit';
 		}
 		
 		return (
@@ -73,11 +91,10 @@
 						</table>
 					</div>
 				</div>
-				<div className="row">
-					<div className="col-md-8 col-md-offset-2">
-						{showTemplate}
-					</div>
-				</div>
+				<Modal ref="modal"
+						header={this.props.header}
+						body={showTemplate}
+					/>
 			</div>
 		);
 	}

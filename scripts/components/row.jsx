@@ -1,25 +1,20 @@
 ﻿var AuthConnectionRow  = React.createClass({
     propTypes: {
+        id: React.PropTypes.string.isRequired,
         strategy: React.PropTypes.string.isRequired,
         name: React.PropTypes.string.isRequired,
         selected:  React.PropTypes.func.isRequired,
         edit:  React.PropTypes.func.isRequired,
         remove:  React.PropTypes.func.isRequired
     },
-    updateSelectedRow: function(el){
-        $(el).closest("table").find("tr").removeClass("active");
-        $(el).closest("tr").addClass("active");
-    },
     callSelection: function(e){
-        this.props.selected(this.props.name);
-        this.updateSelectedRow(e.target);
+        this.props.selected(this.props.id);
     },
     callEdit: function(e){
-        this.props.edit(this.props.name);
-        this.updateSelectedRow(e.target);
+        this.props.edit(this.props.id);
     },
     callDelete: function(e){
-        this.props.remove(this.props.name);
+        this.props.remove(this.props.id);
     },
     render: function() {
         return (
