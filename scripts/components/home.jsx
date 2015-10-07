@@ -34,7 +34,7 @@
 		});
 	},
 	onSaveComplete: function(id, updatedConnection){
-		var self = this;
+		$(this.refs.modal.getDOMNode()).modal('hide'); 		
 		this.setState({
 			connections : this.state.connections.map(function(connection){
 				if (connection.id === id){
@@ -48,6 +48,7 @@
 		});
 	},
 	onDeleteComplete: function(name){
+		$(this.refs.modal.getDOMNode()).modal('hide'); 				
 		this.setState({
 			connections : this.state.connections.filter(function(connection){ return connection.id !== id; }),
 			editMode : false,
@@ -71,28 +72,35 @@
 		});
 
 		var showTemplate = ( <PreviewConnection selectedConnection={this.state.selectedConnection} closeHandler={this.close} />),
-			header = 'View';
+			header = (this.state.selectedConnection ? this.state.selectedConnection.name : '') + 'Custom OAuth2 Connection';
 		if (this.state.editMode){
 			showTemplate = (<EditConnection selectedConnection={this.state.selectedConnection} closeHandler={this.close} onSaveComplete={this.onSaveComplete} />);
-			header = 'Edit';
 		}
 		
 		return (
 			<div className="container">
+				<div className="page-header">
+					<h1>Custom OAuth2 Connections <small>Auth0 Exercise</small></h1>
+				</div>
 				<div className="row">
-				  	<div className="col-md-8 col-md-offset-2">
+				  	<div className="col-md-12">
 						<table className="table table-striped">
 						<thead><tr>
 							<th>Strategy</th>
 							<th>Name</th>
-							<th>Actions</th>
+							<th></th>
 						</tr></thead>
 						<tbody>{rows}</tbody>
 						</table>
 					</div>
 				</div>
+				<div className="row">
+					<div className="col-md-12">
+						<button className="btn btn-primary" >Add</button>
+					</div>
+				</div>
 				<Modal ref="modal"
-						header={this.props.header}
+						header={header}
 						body={showTemplate}
 					/>
 			</div>
