@@ -33,7 +33,7 @@
               <td width="30%">
                 <div className="btn-group" role="group" aria-label="...">
                     <button type="button" className="btn btn-default" onClick={this.callSelection}>View</button>
-                    <button type="button" className="btn btn-warning" onClick={this.callEdit}>Edit</button>
+                    <button type="button" className="btn btn-default" onClick={this.callEdit}>Edit</button>
                     <button type="button" className="btn btn-danger"  onClick={this.callDelete} >Delete</button>
                 </div>
               </td>

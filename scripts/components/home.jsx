@@ -8,19 +8,11 @@
 	},
 	componentWillMount: function() {
 		var that = this;
-		$.ajax({
-			url: AUTH_CONNECTION_API,
-			type:"GET",
-			contentType: 'application/json',
-			beforeSend : function(xhr) {
-				xhr.setRequestHeader("Authorization", "Bearer " + AUTH_TOKEN);
-		}})
-		.done(function(data) {
-			that.setState({connections: data});
-		})
-		.fail(function(xhr, err, st){
-			console.log(err);
-		});
+		var connection = new Connection();
+		connection.getAll(
+			function(data) {that.setState({connections: data});}, 
+			function(xhr, err, st){console.log(err);}
+		);
 	},
 	onRowSelected : function(name){
 		this.setState({
