@@ -96,7 +96,7 @@
 				</div>
 				<div className="row">
 					<div className="col-md-12">
-						<button className="btn btn-primary" >Add</button>
+						<button className="btn btn-primary"  disabled="disabled">Add</button>
 					</div>
 				</div>
 				<Modal ref="modal"

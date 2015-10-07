@@ -32,7 +32,7 @@ var PreviewConnection  = React.createClass({
               </div>
               <div className="group">
                 <label>Fetch script</label>
-                <div><pre><code>{ this.props.selectedConnection.options.scripts.fetchUserProfile }</code></pre></div>
+                <div><pre className="prettyprint"><code class="language-js">{ this.props.selectedConnection.options.scripts.fetchUserProfile }</code></pre></div>
               </div>
             </div>
       );
