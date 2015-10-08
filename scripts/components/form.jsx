@@ -1,4 +1,4 @@
-var EditConnection  = React.createClass({
+var ConnectionForm  = React.createClass({
     propTypes: {
         onSaveComplete:  React.PropTypes.func.isRequired,
         closeHandler: React.PropTypes.func.isRequired
@@ -6,7 +6,7 @@ var EditConnection  = React.createClass({
     getInitialState: function(){
         return {
             id: this.props.selectedConnection ? this.props.selectedConnection.id : null ,
-            strategy: this.props.selectedConnection ? this.props.selectedConnection.strategy : null ,
+            strategy: this.props.selectedConnection ? this.props.selectedConnection.strategy : "oauth2",
             name: this.props.selectedConnection ? this.props.selectedConnection.name : null ,
             client_id: this.props.selectedConnection ? this.props.selectedConnection.options.client_id : null,
             client_secret: this.props.selectedConnection ? this.props.selectedConnection.options.client_secret : null,
@@ -19,9 +19,17 @@ var EditConnection  = React.createClass({
     callSave: function(e){
         e.preventDefault();
         e.stopPropagation();
-        var that = this,
-            id = this.props.selectedConnection.id;
-            newState = {
+        var connection = new Connection(),
+            errorCallback = function(err) {
+                alert('Error when calling the API :' + err.responseJSON.message);
+                this.props.closeHandler();
+            },
+            completeCallback = function(connection){
+                this.props.onSaveComplete(connection);        
+            };
+            
+        if (this.props.selectedConnection){
+            var updateState = {
                 name: this.state.name,
                 options : { 
                     client_id: this.state.client_id,
@@ -34,15 +42,24 @@ var EditConnection  = React.createClass({
                     }
                 }
             };
-            
-        var connection = new Connection();
-        connection.update(id, newState, function(data){
-            // Remove connection from collection
-            that.props.onSaveComplete(id, data);        
-        }, function(err){
-            alert('There was an error updating connection');
-            that.props.closeHandler();
-        });       
+            connection.update(this.props.selectedConnection.id, updateState, completeCallback.bind(this) ,errorCallback.bind(this));       
+        } else {
+            var newState = {
+                    strategy: this.state.strategy,
+                    name: this.state.name,
+                    options : { 
+                        client_id: this.state.client_id,
+                        client_secret: this.state.client_secret,
+                        authorizationURL: this.state.authorizationURL,
+                        tokenURL: this.state.tokenURL,
+                        scope: this.state.scope,
+                        scripts: {
+                            fetchUserProfile:this.state.fetchUserProfile
+                        }
+                    }
+                };
+            connection.create(newState, completeCallback.bind(this) ,errorCallback.bind(this));   
+        } 
     },
     callClose: function(e){
         e.preventDefault();
@@ -52,7 +69,7 @@ var EditConnection  = React.createClass({
     componentWillMount: function() {
         this.setState({
             id: this.props.selectedConnection ? this.props.selectedConnection.id : null ,
-            strategy: this.props.selectedConnection ? this.props.selectedConnection.strategy : null ,
+            strategy: this.props.selectedConnection ? this.props.selectedConnection.strategy : "oauth2",
             name: this.props.selectedConnection ? this.props.selectedConnection.name : null ,
             client_id: this.props.selectedConnection ? this.props.selectedConnection.options.client_id : null,
             client_secret: this.props.selectedConnection ? this.props.selectedConnection.options.client_secret : null,
@@ -84,12 +101,12 @@ var EditConnection  = React.createClass({
         this.setState({fetchUserProfile: event.target.value});
     },
     render: function() {
-        if (!this.props.selectedConnection){
-            return (<div>{ this.props.selectedConnection}</div>);
-        }
-    
         return (
             <form>
+              <div className="form-group">
+                <label htmlFor="strategy">Strategy</label>
+                <input disabled="disabled" type="text" className="form-control" id="strategy"  value={ this.state.strategy }  />
+              </div> 
               <div className="form-group">
                 <label htmlFor="name">Name</label>
                 <input type="text" className="form-control" id="name"  value={ this.state.name }  onChange={this.handleNameChange}/>

@@ -4,17 +4,23 @@ var Connection = function () {
 };
 
 Connection.prototype._request = function(method, url, data, onComplete, onError){
-    var self = this;
-	$.ajax({
-        url: url,
-        type: method,
-        data: JSON.stringify(data),
-        contentType: 'application/json',
-        beforeSend : function(xhr) {
-            xhr.setRequestHeader("Authorization", self.authHeader);
-    }.bind(this)})
-    .done(onComplete)
-    .fail(onError);
+    var self = this,
+        ajaxOptions = {
+            url: url,
+            type: method,
+            contentType: 'application/json',
+            beforeSend : function(xhr) {
+                xhr.setRequestHeader("Authorization", self.authHeader);
+            }
+        };
+    
+    if (data) {
+        ajaxOptions['data'] = JSON.stringify(data); 
+    }
+    
+	$.ajax(ajaxOptions)
+        .done(onComplete)
+        .fail(onError);
 }
 
 Connection.prototype.getAll = function (callback, errorCallback) {

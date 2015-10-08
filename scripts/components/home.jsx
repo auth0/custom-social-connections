@@ -3,7 +3,7 @@
 		return { 
 			connections: this.props.connections || [],
 			selectedState: null,
-			editMode : false
+			showFormDialogBox : false
 		};
 	},
 	componentWillMount: function() {
@@ -14,67 +14,76 @@
 			function(xhr, err, st){console.log(err);}
 		);
 	},
-	onRowSelected : function(id){
+	openConnectionDialogBox : function(id){
 		this.setState({
 			selectedConnection: this.state.connections.filter(function(el){ return el.id === id})[0],
-			editMode : false
+			showFormDialogBox : false
 		});
 		$(this.refs.modal.getDOMNode()).modal(); 
 	},
-	onEdit: function(id){
-		var selectedConnection = this.state.connections.filter(function(el){ return el.id === id})[0];
-		this.setState({ selectedConnection: selectedConnection, editMode : true });
+	openConnectionFormDialogBox: function(id){
+		var selectedConnection = null;
+		if (id) {
+			selectedConnection = this.state.connections.filter(function(el){ return el.id === id})[0];
+		}
+		
+		this.setState({ 
+			selectedConnection: selectedConnection, 
+			showFormDialogBox : true 
+		});
 		$(this.refs.modal.getDOMNode()).modal(); 
 	},
-	onAddComplete: function(connection){
-		this.setState({
-			connections : this.state.connections.push(connection),
-			editMode : false,
-			selectedConnection : null
-		});
+	onSaveComplete: function(connection){
+		this.closeModal();
+		this.setState({ connections : this.addOrUpdateConnectionList(connection) });
 	},
-	onSaveComplete: function(id, updatedConnection){
+	addOrUpdateConnectionList: function(connection){
+		var found = false,
+			updateList = [];
+		for(var i = 0; i < this.state.connections.length; i++){
+			if (connection.id === this.state.connections[i].id){
+				found = true;
+				this.state.connections[i] = connection;
+			} 
+		}
+		
+		if (!found){
+			this.state.connections.push(connection);
+		}
+		
+		return this.state.connections;
+	},
+	onDeleteComplete: function(id){
+		var connection = new Connection(),
+			onComplete = function(){
+				this.closeModal(); 				
+				this.setState({ connections : this.state.connections.filter(function(connection){ return connection.id !== id; }) });
+			};
+		connection.delete(id, onComplete.bind(this));
+	},
+	onAddClick: function() {
+		this.openConnectionFormDialogBox();	
+	},
+	closeModal: function(){
 		$(this.refs.modal.getDOMNode()).modal('hide'); 		
-		this.setState({
-			connections : this.state.connections.map(function(connection){
-				if (connection.id === id){
-					connection = updatedConnection;
-				}
-				
-				return connection
-			}),
-			editMode : false,
-			selectedConnection : null
-		});
-	},
-	onDeleteComplete: function(name){
-		$(this.refs.modal.getDOMNode()).modal('hide'); 				
-		this.setState({
-			connections : this.state.connections.filter(function(connection){ return connection.id !== id; }),
-			editMode : false,
-			selectedConnection : null
-		});
-	},
-	close: function(){
-		$(this.refs.modal.getDOMNode()).modal('hide'); 		
-		this.setState({editMode : false, selectedConnection : null});
+		this.setState({showFormDialogBox : false, selectedConnection : null});
 	},
 	render: function() {
-		var that = this;	
-		var rows = this.state.connections.map(function (connection) {
-			return ( <AuthConnectionRow  
-						selected={that.onRowSelected}
-						edit={that.onEdit}
-						remove={that.onDeleteComplete}
-						id={connection.id}
-						name={connection.name} 
-						strategy={connection.strategy} />);
-		});
-
-		var showTemplate = ( <PreviewConnection selectedConnection={this.state.selectedConnection} closeHandler={this.close} />),
-			header = (this.state.selectedConnection ? this.state.selectedConnection.name : '') + 'Custom OAuth2 Connection';
-		if (this.state.editMode){
-			showTemplate = (<EditConnection selectedConnection={this.state.selectedConnection} closeHandler={this.close} onSaveComplete={this.onSaveComplete} />);
+		var that = this,
+			header = (this.state.selectedConnection ? this.state.selectedConnection.name : '') + ' Custom OAuth2 Connection',
+			rows = this.state.connections.map(function (connection) {
+				return ( <AuthConnectionRow 
+							selected={that.openConnectionDialogBox}
+							edit={that.openConnectionFormDialogBox}
+							remove={that.onDeleteComplete}
+							id={connection.id}
+							name={connection.name} 
+							strategy={connection.strategy} />);
+			}),
+			showTemplate = ( <PreviewConnection selectedConnection={this.state.selectedConnection} closeHandler={this.closeModal} />);
+			
+		if (this.state.showFormDialogBox){
+			showTemplate = (<ConnectionForm selectedConnection={this.state.selectedConnection} closeHandler={this.closeModal} onSaveComplete={this.onSaveComplete} />);
 		}
 		
 		return (
@@ -96,13 +105,10 @@
 				</div>
 				<div className="row">
 					<div className="col-md-12">
-						<button className="btn btn-primary"  disabled="disabled">Add</button>
+						<button className="btn btn-primary"  onClick={this.onAddClick}>Add</button>
 					</div>
 				</div>
-				<Modal ref="modal"
-						header={header}
-						body={showTemplate}
-					/>
+				<Modal ref="modal" header={header} body={showTemplate} />
 			</div>
 		);
 	}
