@@ -1,4 +1,8 @@
 var Modal = React.createClass({ 
+	propTypes: {
+        body: React.PropTypes.element,
+        header: React.PropTypes.string,
+    },
 	componentDidMount: function() {
     	$(this.getDOMNode()).modal({ background: true, keyboard: true, show: false})
 	},
@@ -10,6 +14,8 @@ var Modal = React.createClass({
 		e.stopPropagation(); 
 	},
 	render: function() {
+		var body = this.props.body;
+	
 		return (<div onClick={this.handleClick} className="modal fade" role="dialog" aria-hidden="true">
 				<div className="modal-dialog">
 				<div className="modal-content">
@@ -17,9 +23,9 @@ var Modal = React.createClass({
 						<button type="button" className="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
-        				<h4 class="modal-title">{this.props.header}</h4>
+        				<h4 className="modal-title">{this.props.header}</h4>
 					</div>
-					<div className="modal-body">{this.props.body}</div>
+					{body}
 				</div>
 				</div>
 			</div>) 

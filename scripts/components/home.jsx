@@ -2,40 +2,44 @@
 	getInitialState: function() {
 		return { 
 			connections: this.props.connections || [],
-			selectedState: null,
-			showFormDialogBox : false
+			selectedConnection: { },
+			dialogBody : 'info'
 		};
 	},
 	componentWillMount: function() {
-		var that = this;
-		var connection = new Connection();
-		connection.getAll(
-			function(data) {that.setState({connections: data});}, 
-			function(xhr, err, st){console.log(err);}
-		);
+		var connection = new Connection(),
+			onComplete = function(data) { this.setState({connections: data});},
+			onError = function(xhr, err, st){console.log(err);};
+		connection.getAll(onComplete.bind(this), onError.bind(this));
 	},
-	openConnectionDialogBox : function(id){
+	openModal: function(id, type){
 		this.setState({
-			selectedConnection: this.state.connections.filter(function(el){ return el.id === id})[0],
-			showFormDialogBox : false
+			selectedConnection: this.getConnection(id) || {},
+			dialogBody : type
 		});
-		$(this.refs.modal.getDOMNode()).modal(); 
+		$(this.refs.modal.getDOMNode()).modal();
 	},
-	openConnectionFormDialogBox: function(id){
-		var selectedConnection = null;
-		if (id) {
-			selectedConnection = this.state.connections.filter(function(el){ return el.id === id})[0];
-		}
-		
-		this.setState({ 
-			selectedConnection: selectedConnection, 
-			showFormDialogBox : true 
-		});
-		$(this.refs.modal.getDOMNode()).modal(); 
+	closeModal: function(){
+		$(this.refs.modal.getDOMNode()).modal('hide'); 		
+		this.setState({dialogBody : 'info', selectedConnection : {}});
 	},
 	onSaveComplete: function(connection){
 		this.closeModal();
 		this.setState({ connections : this.addOrUpdateConnectionList(connection) });
+	},
+	onDeleteComplete: function(id){
+		var connection = new Connection(),
+			onComplete = function(){
+				this.closeModal(); 				
+				this.setState({ connections : this.removeConnection(id) });
+			};
+		connection.delete(id, onComplete.bind(this));
+	},
+	onAddClick: function() {
+		this.openModal(null, 'form');	
+	},
+	getConnection: function(id){
+		return this.state.connections.filter(function(el){ return el.id === id})[0]
 	},
 	addOrUpdateConnectionList: function(connection){
 		var found = false,
@@ -53,37 +57,49 @@
 		
 		return this.state.connections;
 	},
-	onDeleteComplete: function(id){
-		var connection = new Connection(),
-			onComplete = function(){
-				this.closeModal(); 				
-				this.setState({ connections : this.state.connections.filter(function(connection){ return connection.id !== id; }) });
-			};
-		connection.delete(id, onComplete.bind(this));
-	},
-	onAddClick: function() {
-		this.openConnectionFormDialogBox();	
-	},
-	closeModal: function(){
-		$(this.refs.modal.getDOMNode()).modal('hide'); 		
-		this.setState({showFormDialogBox : false, selectedConnection : null});
+	removeConnection: function(id){
+		return this.state.connections.filter(function(connection){ return connection.id !== id; })
 	},
 	render: function() {
 		var that = this,
-			header = (this.state.selectedConnection ? this.state.selectedConnection.name : '') + ' Custom OAuth2 Connection',
+			header = (this.state.selectedConnection.name || '') + ' Custom OAuth2 Connection',
 			rows = this.state.connections.map(function (connection) {
-				return ( <AuthConnectionRow 
-							selected={that.openConnectionDialogBox}
-							edit={that.openConnectionFormDialogBox}
-							remove={that.onDeleteComplete}
-							id={connection.id}
-							name={connection.name} 
-							strategy={connection.strategy} />);
+				return ( <AuthConnectionRow key={connection.id} openDialog={that.openModal} id={connection.id} name={connection.name} strategy={connection.strategy} />);
 			}),
-			showTemplate = ( <PreviewConnection selectedConnection={this.state.selectedConnection} closeHandler={this.closeModal} />);
+			modalBody = ( <PreviewConnection selectedConnection={this.state.selectedConnection} closeHandler={this.closeModal} />);
 			
-		if (this.state.showFormDialogBox){
-			showTemplate = (<ConnectionForm selectedConnection={this.state.selectedConnection} closeHandler={this.closeModal} onSaveComplete={this.onSaveComplete} />);
+		if (this.state.dialogBody == 'delete') {
+			header = "Delete Confirmation";
+			modalBody = (<DeleteConfirmation id={this.state.selectedConnection.id} name={this.state.selectedConnection.name} confirmHandler={this.onDeleteComplete} closeHandler={this.closeModal} />);
+		} else if (this.state.dialogBody == 'form') {
+			modalBody = (<ConnectionForm 
+								selectedConnectionId={this.state.selectedConnection.id} 
+								closeHandler={this.closeModal} 
+								onSaveComplete={this.onSaveComplete}
+								id={this.state.selectedConnection.id || null}
+								name={this.state.selectedConnection.name || null} 
+								strategy={this.state.selectedConnection.strategy || null}
+								client_id={this.state.selectedConnection.options ? this.state.selectedConnection.options.client_id : null}
+								client_secret={this.state.selectedConnection.options ? this.state.selectedConnection.options.client_secret : null} 
+								authorizationURL={this.state.selectedConnection.options ? this.state.selectedConnection.options.authorizationURL : null} 
+								tokenURL={this.state.selectedConnection.options ? this.state.selectedConnection.options.tokenURL : null} 
+								scope={this.state.selectedConnection.options ? this.state.selectedConnection.options.scope : null} 
+								fetchUserProfile={this.state.selectedConnection.options ? this.state.selectedConnection.options.scripts.fetchUserProfile : null} 
+								/>);
+		}
+		
+		var connectionsTable = (<table className="table table-striped">
+							<thead>
+								<tr>
+									<th>Strategy</th>
+									<th>Name</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>{rows}</tbody>
+						</table>);
+		if (this.state.connections.length == 0) {
+			connectionsTable = (<p>There are no Custom OAuth2 Connections</p>);
 		}
 		
 		return (
@@ -93,22 +109,15 @@
 				</div>
 				<div className="row">
 				  	<div className="col-md-12">
-						<table className="table table-striped">
-						<thead><tr>
-							<th>Strategy</th>
-							<th>Name</th>
-							<th></th>
-						</tr></thead>
-						<tbody>{rows}</tbody>
-						</table>
+						{{connectionsTable}}
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-md-12">
-						<button className="btn btn-primary"  onClick={this.onAddClick}>Add</button>
+						<button className="btn btn-primary" onClick={this.onAddClick}>Add</button>
 					</div>
 				</div>
-				<Modal ref="modal" header={header} body={showTemplate} />
+				<Modal ref="modal" header={header} body={modalBody} />
 			</div>
 		);
 	}

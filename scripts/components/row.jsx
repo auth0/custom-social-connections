@@ -3,18 +3,16 @@
         id: React.PropTypes.string.isRequired,
         strategy: React.PropTypes.string.isRequired,
         name: React.PropTypes.string.isRequired,
-        selected:  React.PropTypes.func.isRequired,
-        edit:  React.PropTypes.func.isRequired,
-        remove:  React.PropTypes.func.isRequired
+        openDialog:  React.PropTypes.func.isRequired
     },
     callSelection: function(e){
-        this.props.selected(this.props.id);
+        this.props.openDialog(this.props.id, "info");
     },
     callEdit: function(e){
-        this.props.edit(this.props.id);
+        this.props.openDialog(this.props.id, "form");
     },
     callDelete: function(e){
-        this.props.remove(this.props.id);
+        this.props.openDialog(this.props.id, "delete");
     },
     render: function() {
         return (
@@ -28,7 +26,7 @@
               <td width="30%">
                 <div className="btn-group" role="group" aria-label="...">
                     <button type="button" className="btn btn-default" disabled="disabled">Try It</button>                    
-                    <button type="button" className="btn btn-default" onClick={this.callSelection}>View</button>
+                    <button type="button" className="btn btn-default" onClick={this.callSelection}>Details</button>
                     <button type="button" className="btn btn-default" onClick={this.callEdit}>Edit</button>
                     <button type="button" className="btn btn-danger"  onClick={this.callDelete} >Delete</button>
                 </div>
