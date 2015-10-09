@@ -154,7 +154,7 @@ var ConnectionForm  = React.createClass({
                     </div>
                     <div className="form-group">
                         <label htmlFor="script">Fetch user profile script</label>
-                        <TextEditor script={ this.state.fetchUserProfile } textChange={this.handleFetchUserProfileChange} />
+                        <TextEditor script={ this.state.fetchUserProfile || '' } textChange={this.handleFetchUserProfileChange} />
                     </div>
                 </div>
                 <div className="modal-footer">

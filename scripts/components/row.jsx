@@ -14,6 +14,9 @@
     callDelete: function(e){
         this.props.openDialog(this.props.id, "delete");
     },
+    callTryIt: function(e){
+        this.props.tryit(this.props.id);
+    },
     render: function() {
         return (
             <tr>
@@ -25,7 +28,7 @@
               </td>
               <td width="30%">
                 <div className="btn-group" role="group" aria-label="...">
-                    <button type="button" className="btn btn-default" disabled="disabled">Try It</button>                    
+                    <button type="button" className="btn btn-default" onClick={this.callTryIt}>Try It</button>                    
                     <button type="button" className="btn btn-default" onClick={this.callSelection}>Details</button>
                     <button type="button" className="btn btn-default" onClick={this.callEdit}>Edit</button>
                     <button type="button" className="btn btn-danger"  onClick={this.callDelete} >Delete</button>

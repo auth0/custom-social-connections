@@ -35,6 +35,13 @@
 			};
 		connection.delete(id, onComplete.bind(this));
 	},
+	onTryIt: function(id){
+		var that = this;
+		this.setState({tryit: this.getConnection(id)});
+		setTimeout(function(){
+			that.setState({tryit: null });
+		},0);
+	},
 	onAddClick: function() {
 		this.openModal(null, 'form');	
 	},
@@ -64,7 +71,7 @@
 		var that = this,
 			header = (this.state.selectedConnection.name || '') + ' Custom OAuth2 Connection',
 			rows = this.state.connections.map(function (connection) {
-				return ( <AuthConnectionRow key={connection.id} openDialog={that.openModal} id={connection.id} name={connection.name} strategy={connection.strategy} />);
+				return ( <AuthConnectionRow tryit={that.onTryIt} key={connection.id} openDialog={that.openModal} id={connection.id} name={connection.name} strategy={connection.strategy} />);
 			}),
 			modalBody = ( <PreviewConnection selectedConnection={this.state.selectedConnection} closeHandler={this.closeModal} />);
 			
@@ -118,6 +125,7 @@
 					</div>
 				</div>
 				<Modal ref="modal" header={header} body={modalBody} />
+				<TryIt connection={this.state.tryit} />
 			</div>
 		);
 	}

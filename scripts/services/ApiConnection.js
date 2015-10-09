@@ -42,3 +42,17 @@ Connection.prototype.update = function (id, data, callback, errorCallback) {
 Connection.prototype.delete = function (name, callback, errorCallback) {
     this._request("DELETE", this.apiBaseUrl + "/" + name, null, callback, errorCallback);    
 };
+
+Connection.prototype.getTokenInfo = function (token, callback, errorCallback) {
+     var ajaxOptions = {
+            url: AUTH_BASE_URL + "userinfo",
+            type: "GET",
+            beforeSend : function(xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + token);
+            }
+        };
+       
+	$.ajax(ajaxOptions)
+        .done(callback)
+        .fail(errorCallback);
+};
