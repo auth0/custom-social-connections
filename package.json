@@ -1,0 +1,33 @@
+{
+  "name": "hawkeye",
+  "version": "0.0.1",
+  "description": "Hawkeye gives you the posiblity to manage Auth0 custom OAuth2 connections",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jcenturion/dashboard.git"
+  },
+  "keywords": [
+    "auth0",
+    "connections",
+    "oauth2"
+  ],
+  "author": "centurion.javier@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jcenturion/dashboard/issues"
+  },
+  "homepage": "https://github.com/jcenturion/dashboard#readme",
+  "devDependencies": {
+    "gulp": "~3.9.0",
+    "gulp-connect": "~2.2.0",
+    "gulp-jshint": "~1.11.2",
+    "gulp-jsxcs": "~0.1.9",
+    "jshint-jsx": "~0.4.1",
+    "jshint-stylish": "~2.0.1"
+  },
+  "dependencies": {}
+}
