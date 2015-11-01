@@ -1,34 +1,56 @@
-var gulp        = require('gulp');
-var connect     = require('gulp-connect');
-var jsxcs       = require('gulp-jsxcs');
-var jshint      = require('gulp-jshint');
-var stylish     = require('jshint-stylish');
+var gulp           = require('gulp');
+var connect        = require('gulp-connect');
+var jsxcs          = require('gulp-jsxcs');
+var jshint         = require('gulp-jshint');
+var stylish        = require('jshint-stylish');
+var nodemon        = require('gulp-nodemon');
+var livereload     = require('gulp-livereload');
+
+var jscs           = require('gulp-jscs');
+var stylishJscs    = require('gulp-jscs-stylish');
+var jshint         = require('gulp-jshint');
+var stylish        = require('jshint-stylish');
+
+gulp.task('lint-jsx', function () {
+  return gulp.src(['app/public/scripts/**/*.jsx'])
+    .pipe(jshint({ linter: require('jshint-jsx').JSXHINT }))
+    .pipe(jshint.reporter(stylish, { verbose: true }));
+});
+
+gulp.task('jscs-jsx', function() {
+  return gulp.src(['app/public/scripts/**/*.jsx'])
+    .pipe(jsxcs());
+});
 
 gulp.task('lint', function () {
-  return gulp.src(['app/**/*.jsx'])
-    .pipe(jshint({ linter: require('jshint-jsx').JSXHINT }))
+  return gulp.src(['app/**/*.js', '!app/public/**/*.jsx'])
+    .pipe(jshint())
     .pipe(jshint.reporter(stylish, { verbose: true }))
 });
 
 gulp.task('jscs', function() {
-  return gulp.src(['app/**/*.jsx'])
-    .pipe(jsxcs());
+  return gulp.src(['app/**/*.js', '!app/public/**/*.jsx'])
+    .pipe(jscs())
+    .on('error', function () {})
+    .pipe(stylishJscs());
 });
 
-gulp.task('connect', function() {
-  connect.server({
-    root: 'app',
-    livereload: true
+gulp.task('serve', function(){
+  return nodemon({
+    script: './app/app.js',
+    env:    { 'NODE_ENV': 'development' },
+    tasks:  ['lint', 'jscs']
   });
 });
 
-gulp.task('src', function () {
-  gulp.src('./app/**/*.*')
-    .pipe(connect.reload());
+gulp.task('client', ['jscs-jsx', 'lint-jsx'], function () {
+  return gulp.src(['app/public/scripts/**/*.jsx'])
+    .pipe(livereload());
 });
 
 gulp.task('watch', function () {
-  gulp.watch(['./app/**/*.*'], ['src', 'jscs', 'lint']);
+  livereload.listen();
+  gulp.watch(['./app/public/scripts/**/*.*'], ['client']);
 });
 
-gulp.task('default', ['jscs', 'lint', 'connect', 'watch']);
+gulp.task('default', ['lint', 'jscs', 'jscs-jsx', 'lint-jsx', 'serve', 'watch']);
