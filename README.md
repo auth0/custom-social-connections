@@ -25,7 +25,7 @@ To run **Hawkeye** locally, you'll need the following:
 ### Running the server
 
     $ gulp
-    $ open http://localhost:8080
+    $ open http://localhost:3000
 
 ## Issue Reporting
 

@@ -1,0 +1,5 @@
+script.
+  var regex = new RegExp(/#access_token=([^&]+)/);
+  var token = regex.exec(window.location.hash).pop();
+  document.cookie="token="+token;
+  window.location.href = '/sucess?accessToken='+token;
