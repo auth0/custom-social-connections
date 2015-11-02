@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Custom Connections</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="auth0/manage boilerplate">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" href="https://cdn.auth0.com/styleguide/2.0.1/lib/logos/img/favicon.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="css/map.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.auth0.com/styles/zocial.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.auth0.com/manage/v0.3.973/css/index.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script type="text/javascript" src="scripts/vendor/jwt-decode.js"></script>
+    <script type="text/javascript" src="scripts/helpers/env.js"></script>
+    <script type="text/javascript" src="scripts/helpers/authentication.js"></script>
+
+    <script src="scripts/vendor/modernizr.custom.js"></script>
+    <script type="text/javascript" src="https://cdn.auth0.com/manage/v0.3.973/components/ZeroClipboard/ZeroClipboard.js"></script>
+
+    <!--Temporary-->
+    <script type="text/javascript" src="assets/connections.js"></script>
+    <!--Temporary-->
+  </head>
+  <body>
+    <header style="background-color: #fbfbfb" class="dashboard-header">
+      <nav role="navigation" class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <h1 class="navbar-brand"><a href="http://manage.auth0.com/"><span>Auth0</span></a></h1>
+          </div>
+          <div id="navbar-collapse" class="collapse navbar-collapse">
+            <ul class="nav hide navbar-nav navbar-left">
+              <li class="li-why"><a href="/why-auth0">Why Auth0</a></li>
+              <li class="li-how"><a href="/how-it-works">How It Works</a></li>
+              <li class="li-pricing"><a href="/pricing">Pricing</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown"><span role="button" data-toggle="dropdown" data-target="#" class="btn-dro btn-username"><img src="https://secure.gravatar.com/avatar/a12075a065d2c41ac447dcffc1398d43?s=480&amp;r=pg&amp;d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fro.png" class="picture avatar"><span class="username-text truncate">Username</span><i class="icon-budicon-460"></i></span>
+                <ul role="menu" aria-labelledby="dLabel" class="dropdown-menu animated">
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#/account">Account settings</a></li>
+                  <li role="presentation" class="divider"></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="new_account">New Account</a></li>
+                  <li role="presentation" class="divider"></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="/logout">Logout</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="container">
+      <div class="row">
+        <div id="sidebar" class="col-xs-2"><a href="#" class="visible-phone hide"><i class="icon icon-budicon-497">Dashboard</i></a>
+          <div class="sidebar-fixed">
+            <ul>
+              <li class="connections-tab submenu active"><a href="#"><i class="icon icon-budicon-339"></i><span> Connections</span></a><span class="featuring-badge animated bounce">New</span>
+                <ul>
+                  <li class="active"><a href="#/connections/custom"><i class="icon icon-budicon-519"></i><span>Custom</span></a></li>
+                </ul>
+              </li>
+              <li><a href="https://manage.auth0.com"><span>Back to Dashboard</span></a></li>
+            </ul>
+            <div class="sidebar-footer-links"></div>
+          </div>
+        </div>
+        <div id="connectionsapp"></div>
+        <script src="scripts/bundle.js"></script>
+      </div>
+    </div>
+  </body>
+</html>
