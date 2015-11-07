@@ -15,9 +15,11 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.auth0.com/manage/v0.3.973/css/index.min.css">
     <link rel="stylesheet" href="css/style.css">
 
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="scripts/vendor/jwt-decode.js"></script>
     <script type="text/javascript" src="scripts/helpers/env.js"></script>
     <script type="text/javascript" src="scripts/helpers/authentication.js"></script>
+    <script type="text/javascript" src="scripts/helpers/commons.js"></script>
 
     <script src="scripts/vendor/modernizr.custom.js"></script>
     <script type="text/javascript" src="https://cdn.auth0.com/manage/v0.3.973/components/ZeroClipboard/ZeroClipboard.js"></script>
@@ -40,13 +42,16 @@
               <li class="li-pricing"><a href="/pricing">Pricing</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li class="dropdown"><span role="button" data-toggle="dropdown" data-target="#" class="btn-dro btn-username"><img src="https://secure.gravatar.com/avatar/a12075a065d2c41ac447dcffc1398d43?s=480&amp;r=pg&amp;d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fro.png" class="picture avatar"><span class="username-text truncate">Username</span><i class="icon-budicon-460"></i></span>
+              <li>
+                <a target="_blank" href="https://auth0.com/docs/oauth2-examples">Documentation</a>
+              </li>
+              <li class="dropdown">
+                <span role="button" class="btn-dro btn-username">
+                  <img id="user-picture"  src="https://secure.gravatar.com/avatar/a12075a065d2c41ac447dcffc1398d43?s=480&amp;r=pg&amp;d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fro.png" class="picture avatar"/>
+                  <span class="username-text truncate" id="username">Username</span><i class="icon-budicon-460"></i>
+                </span>
                 <ul role="menu" aria-labelledby="dLabel" class="dropdown-menu animated">
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#/account">Account settings</a></li>
-                  <li role="presentation" class="divider"></li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="new_account">New Account</a></li>
-                  <li role="presentation" class="divider"></li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="/logout">Logout</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="/logout.html">Logout</a></li>
                 </ul>
               </li>
             </ul>

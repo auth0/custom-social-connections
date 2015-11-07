@@ -35,6 +35,28 @@
     context.env.apiUrl  = decoded.aud;
     context.env.userUrl = decoded.aud.replace('/api/v2', '/authorize');
     context.env.token   = token;
+
+    var options = {
+      url:         decoded.aud + 'clients',
+      type:        'GET',
+      contentType: 'application/json',
+      headers:     {
+        Authorization: 'Bearer ' + token
+      }
+    };
+
+    $.ajax(options)
+      .then(function (clients) {
+        var userId = clients.pop().owners.pop();
+
+        options.url = decoded.aud + 'users/' + userId;
+
+        $.ajax(options)
+          .then(function (user) {
+            $('#user-picture').attr('src', user.picture);
+            $('#username').text(user.name);
+          });
+      });
   } catch (err) {
     // Invalid token
     authenticate();
