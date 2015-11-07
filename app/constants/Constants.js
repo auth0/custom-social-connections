@@ -10,5 +10,5 @@ module.exports = keyMirror({
   // TODO_UPDATE_TEXT: null
   CONNECTION_GET_ALL: null,
   TEMPLATES_GET_ALL:  null,
-  CONNECTION_CREATE: null,
+  CONNECTION_CREATE: null
 });

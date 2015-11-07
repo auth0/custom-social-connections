@@ -19,3 +19,11 @@
   vertical-align: middle;
   background-image:url("confetti_ball.png")
 }
+
+div.CodeMirror {
+  height: 125px;
+  overflow-y: auto;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
