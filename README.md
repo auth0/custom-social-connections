@@ -6,7 +6,7 @@
 - CRUD operations
 - Create a custom connection based on existing templates
 
-[screenshots]
+Live demo at [http://jcenturion.github.io/dashboard](http://jcenturion.github.io/dashboard/).
 
 ## Development
 
