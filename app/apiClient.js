@@ -46,6 +46,20 @@ module.exports = {
     }
   },
   connections: {
+    share: function share(body) {
+      var options = {
+        url:         window.env.webtasks.shareUrl,
+        type:        'POST',
+        contentType: 'application/json',
+        data:        JSON.stringify(body),
+        error: function (xhr, status, err) {
+          console.log(err);
+        }.bind(this)
+      };
+
+      return $.ajax(options);
+    },
+
     getById: function getById(id) {
       return request('connections/' + id);
     },

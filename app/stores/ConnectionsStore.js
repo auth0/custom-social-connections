@@ -31,6 +31,10 @@ var ConnectionsStore = assign({}, EventEmitter.prototype, {
       }.bind(this));
   },
 
+  share: function (body) {
+    return client.share(body);
+  },
+
   emitChange: function() {
     this.emit(CHANGE_EVENT);
   },

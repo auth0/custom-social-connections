@@ -14,12 +14,17 @@ var ConnectionModal = React.createClass({
   },
   getInitialState: function () {
     return {
-      showSettings: true,
-      showApps:     false,
-      showTryIt:    false,
-      connection:   this.props.connection || {strategy:'oauth2', options: {scripts: {}}, enabled_clients: undefined},
-      title:        this.props.title || 'New Connection',
-      mode:         this.props.mode || 'create'
+      showSettings:   true,
+      showApps:       false,
+      showTryIt:      false,
+      connection:     this.props.connection || {strategy:'oauth2', options: {scripts: {}}, enabled_clients: undefined},
+      title:          this.props.title || 'New Connection',
+      mode:           this.props.mode || 'create',
+      showPrLocation: false,
+      showShare:      this.props.mode === 'edit' ? (this.props.connection.isShared === true ? false : true) : false,
+      prLocation:     '#',
+      sharing:        false,
+      saving:         false
     };
   },
 
@@ -54,6 +59,36 @@ var ConnectionModal = React.createClass({
     });
   },
 
+  _share: function () {
+    var connection = this.state.connectionForm.getConnection();
+
+    this.setState({sharing: true});
+
+    ConnectionsStore.share({
+      recipe:  connection.name,
+      username:    window.env.username,
+      content: {
+        name:     connection.name,
+        strategy: 'oauth2',
+        options: {
+          authorizationURL: connection.options.authorizationURL,
+          tokenURL:         connection.options.tokenURL,
+          scope:            connection.options.scope,
+          scripts:          {
+            fetchUserProfile: connection.options.scripts.fetchUserProfile
+          }
+        }
+      }
+    }).then(function (data) {
+      this.setState({
+        showPrLocation: true,
+        showShare:      false,
+        prLocation:     data.link,
+        sharing:        false
+      });
+    }.bind(this));
+  },
+
   _save: function () {
     var clients    = this.state.applicationsForm.getSelectedClients();
     var connection = this.state.connectionForm.getConnection();
@@ -61,6 +96,8 @@ var ConnectionModal = React.createClass({
 
     connection.enabled_clients = Object.keys(clients);
     delete connection.id;
+
+    this.setState({saving: true});
 
     if (this.state.mode === 'create') {
       ConnectionsStore.create(connection)
@@ -70,7 +107,9 @@ var ConnectionModal = React.createClass({
           this._showTryIt();
           this.setState({
             mode:       'edit',
-            title:      connection.name
+            title:      connection.name,
+            showShare:  true,
+            saving:     false
           });
 
           this.state.connectionForm.setState({
@@ -89,6 +128,9 @@ var ConnectionModal = React.createClass({
           this._showTryIt();
           this.state.connectionForm.setState({
             infoStyle: {display: 'none'}
+          });
+          this.setState({
+            saving: false
           });
         }.bind(this));
     }
@@ -145,14 +187,29 @@ var ConnectionModal = React.createClass({
                 </div>
 
                 <div className="modal-footer text-center">
-                  <button className="btn btn-primary save" data-loading-text="Saving..." onClick={this._save}>
-                    Save
+                  <button className="btn btn-primary save" onClick={this._save}>
+                    <span className={classNames({'hide': this.state.saving})}>Save</span>
+                    <span className={classNames({'hide': !this.state.saving})}>Saving ...</span>
                   </button>
+
                   <a href={this.generateTryItUrl()} target="_blank" className={classNames({'btn': true, 'btn-success': true, 'hide': hide})}>
                     <i className="icon-budicon-187"></i><span className="text">Try</span>
                   </a>
-                  <a href="#" target="_blank" className="btn btn-default hide">
-                    <i className="icon-budicon-339"></i><span className="text">Share</span>
+                  <a href="#" className={classNames({
+                    'btn': true,
+                    'btn-default': true,
+                    'hide': !this.state.showShare
+                  })} onClick={this._share} disabled={this.state.sharing}>
+                    <i className="icon-budicon-339"></i>
+                    <span className={classNames({'hide': this.state.sharing})}>Share</span>
+                    <span className={classNames({'hide': !this.state.sharing})}>Sharing ...</span>
+                  </a>
+                  <a href={this.state.prLocation} target="_blank" className={classNames({
+                    'btn': true,
+                    'btn-default': true,
+                    'hide': !this.state.showPrLocation
+                  })}>
+                    <i className="icon-budicon-339"></i><span className="text">View PR</span>
                   </a>
                 </div>
 

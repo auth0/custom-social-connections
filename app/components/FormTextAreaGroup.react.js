@@ -12,7 +12,7 @@ var FormTextAreaGroup = React.createClass({
   },
   getInitialState: function () {
     return {
-      value: beautify(this.props.defaultValue, { indent_size: 2 }) || ''
+      value: beautify(this.props.defaultValue||'', { indent_size: 2 }) || ''
     };
   },
   getValue: function () {

@@ -53,6 +53,8 @@
 
         $.ajax(options)
           .then(function (user) {
+            context.env.username = user.name;
+
             $('#user-picture').attr('src', user.picture);
             $('#username').text(user.name);
           });
