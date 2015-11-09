@@ -35,7 +35,7 @@ module.exports = function(context, cb) {
 
     github.authenticate({
       type:  'token',
-      token: '[YOUR-TOKEN-HERE]'
+      token: context.data.GITHUB_TOKEN
     });
 
     github.gitdata.getAllReferences({
