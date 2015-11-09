@@ -24,7 +24,7 @@ module.exports = function(context, cb) {
 
     config.recipe   = context.body.recipe;
     config.content  = context.body.content;
-    config.username = context.body.username;
+    config.username = context.body.username || 'dashboard';
 
     github.authenticate({
       type:  'token',
