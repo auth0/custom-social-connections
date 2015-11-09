@@ -73,7 +73,7 @@ var ConnectionModal = React.createClass({
 
     ConnectionsStore.share({
       recipe:  connection.name,
-      user:    window.env.user,
+      userInfo:    window.env.user,
       content: {
         name:     connection.name,
         strategy: 'oauth2',
