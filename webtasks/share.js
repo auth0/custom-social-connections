@@ -12,7 +12,7 @@ module.exports = function(context, cb) {
         return 'recipes/' + this.recipe.replace(/ /g, '-').toLocaleLowerCase() + '.json';
       },
       getReferenceName: function () {
-        return 'recipes/' + this.username.replace(/ /g, '-').toLocaleLowerCase() + '/' + this.recipe.replace(/ /g, '-').toLocaleLowerCase();
+        return 'recipes/' + this.userInfo.nickname.replace(/ /g, '-').toLocaleLowerCase() + '/' + this.recipe.replace(/ /g, '-').toLocaleLowerCase();
       }
     };
     var github = new GitHubApi({
@@ -24,7 +24,14 @@ module.exports = function(context, cb) {
 
     config.recipe   = context.body.recipe;
     config.content  = context.body.content;
-    config.username = context.body.username || 'dashboard';
+    config.userInfo = context.body.userInfo;
+
+    if (typeof config.userInfo === 'undefined' || config.userInfo === null) {
+      context.userInfo = { nickname: 'dashboard', email: 'auth0@support.com' };
+    }
+
+    config.userInfo.nickname = config.userInfo.nickname || 'dashboard';
+    config.userInfo.email    = config.userInfo.email || 'auth0@support.com';
 
     github.authenticate({
       type:  'token',
@@ -76,8 +83,8 @@ module.exports = function(context, cb) {
                   lastCommitSHA // -> Master lastcommit
                 ],
                 author: {
-                  name:  'Connection Dashboard',
-                  email: 'auth0@support.com',
+                  name:  config.userInfo.nickname,
+                  email: config.userInfo.email,
                   date:  (new Date()).toISOString()
                 }
               }, function(err, res) {
