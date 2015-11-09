@@ -17,7 +17,14 @@ var ConnectionModal = React.createClass({
       showSettings:   true,
       showApps:       false,
       showTryIt:      false,
-      connection:     this.props.connection || {strategy:'oauth2', options: {scripts: {}}, enabled_clients: undefined},
+      connection:     this.props.connection || {strategy:'oauth2', options: {scripts: {
+        fetchUserProfile: [
+                          'function(accessToken, ctx, cb) {',
+                          ' // call oauth2 APIwith the accesstoken and create the profile',
+                          ' cb(null, profile);',
+                          '}'
+                          ].join('\n')
+      }}, enabled_clients: undefined},
       title:          this.props.title || 'New Connection',
       mode:           this.props.mode || 'create',
       showPrLocation: false,
@@ -105,7 +112,6 @@ var ConnectionModal = React.createClass({
       ConnectionsStore.create(connection)
         .then(function (connection) {
           this._showSettings();
-          this.state.connectionForm.showInfo();
           this._showTryIt();
           this.setState({
             mode:       'edit',
@@ -113,6 +119,10 @@ var ConnectionModal = React.createClass({
             showShare:  isShared ? false : true,
             saving:     false
           });
+
+          if (!isShared) {
+            this.state.connectionForm.showInfo();
+          }
 
           this.state.connectionForm.setState({
             mode:         'edit',
