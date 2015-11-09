@@ -8,8 +8,10 @@ var CHANGE_EVENT = 'change';
 
 var TemplatesStore = assign({}, EventEmitter.prototype, {
   getAll: function() {
-    return client.getAll();
-    // this.emit(CHANGE_EVENT, window.templates);
+    client.getAll()
+      .then(function (templates) {
+        this.emit(CHANGE_EVENT, JSON.parse(templates));
+      }.bind(this));
   },
 
   emitChange: function() {

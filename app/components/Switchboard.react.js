@@ -2,10 +2,10 @@ var React = require('react');
 var Board = require('./Board.react');
 
 var ConnectionsStore = require('../stores/ConnectionsStore');
+var TemplatesStore   = require('../stores/TemplatesStore');
 
 var Switchboard = React.createClass({
   propTypes: {
-    templates: React.PropTypes.array.isRequired,
     onChange:  React.PropTypes.func,
     onClick:   React.PropTypes.func
   },
@@ -16,11 +16,19 @@ var Switchboard = React.createClass({
     };
   },
   componentDidMount: function () {
-    ConnectionsStore.getAll();
+    TemplatesStore.getAll();
+    TemplatesStore.addChangeListener(this._onTemplatesChange);
     ConnectionsStore.addChangeListener(this._onConnectionsChange);
   },
   componentWillUnmount: function () {
+    TemplatesStore.removeChangeListener(this._onTemplatesChange);
     ConnectionsStore.removeChangeListener(this._onConnectionsChange);
+  },
+  _onTemplatesChange: function (templates) {
+    ConnectionsStore.getAll();
+    this.setState({
+      templates: templates
+    });
   },
   render: function () {
     var boards = this.state.source.map(function (connection, index) {
@@ -36,7 +44,7 @@ var Switchboard = React.createClass({
     );
   },
   _onConnectionsChange: function (connections) {
-    var templates = this.props.templates;
+    var templates = this.state.templates;
     var source = templates.slice(0, templates.length);
 
     templates.forEach(function (template) {

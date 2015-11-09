@@ -12,7 +12,8 @@
       bucket:    ''
     },
     webtasks: {
-      shareUrl: 'https://webtask.it.auth0.com/api/run/wt-centurion_javier-gmail_com-0/share-task?webtask_no_cache=1'
+      shareUrl:     'https://webtask.it.auth0.com/api/run/wt-centurion_javier-gmail_com-0/share-task?webtask_no_cache=1',
+      templatesUrl: 'https://webtask.it.auth0.com/api/run/wt-centurion_javier-gmail_com-0/sync?webtask_no_cache=1'
     }
   };
 })(window);

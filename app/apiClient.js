@@ -37,7 +37,16 @@ request('clients')
 module.exports = {
   templates: {
     getAll: function getAll() {
-      return window.templates;
+      var options = {
+        url:         window.env.webtasks.templatesUrl,
+        type:        'GET',
+        contentType: 'application/json',
+        error: function (xhr, status, err) {
+          console.log(err);
+        }.bind(this)
+      };
+
+      return $.ajax(options);
     }
   },
   clients: {

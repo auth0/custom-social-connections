@@ -1,6 +1,5 @@
 var React            = require('react');
 var $                = require('jQuery');
-var TemplatesStore   = require('../stores/TemplatesStore');
 
 var Switchboard     = require('./Switchboard.react');
 var CreateButton    = require('./CreateButton.react');
@@ -9,11 +8,6 @@ var ConnectionModal = require('./ConnectionModal.react');
 var ConnectionsStore = require('../stores/ConnectionsStore');
 
 var ConnectionsApp = React.createClass({
-  getInitialState: function () {
-    return {
-      templates:   TemplatesStore.getAll()
-    };
-  },
   render: function () {
     return (
       <div className="col-xs-10 wrapper">
@@ -30,7 +24,7 @@ var ConnectionsApp = React.createClass({
               <span>&nbsp;You own custom connections. The Auth0 community will be happy if you share them.&nbsp;</span><a href="#">Click here</a><span>&nbsp;to share your connections.</span>
             </div>
           </div>
-          <Switchboard templates={this.state.templates} onChange={this._onChange} onClick={this._onClick}/>
+          <Switchboard onChange={this._onChange} onClick={this._onClick}/>
         </section>
 
         <div className="col-xs-10 wrapper">
