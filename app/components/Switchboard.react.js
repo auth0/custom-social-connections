@@ -41,6 +41,7 @@ var Switchboard = React.createClass({
 
     templates.forEach(function (template) {
       template.isTemplate = true;
+      template.isShared   = true;
     });
 
     if (connections) {

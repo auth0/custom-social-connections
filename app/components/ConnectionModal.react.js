@@ -92,10 +92,12 @@ var ConnectionModal = React.createClass({
   _save: function () {
     var clients    = this.state.applicationsForm.getSelectedClients();
     var connection = this.state.connectionForm.getConnection();
-    var id = connection.id;
+    var id         = connection.id;
+    var isShared   = connection.isShared;
 
     connection.enabled_clients = Object.keys(clients);
     delete connection.id;
+    delete connection.isShared;
 
     this.setState({saving: true});
 
@@ -108,7 +110,7 @@ var ConnectionModal = React.createClass({
           this.setState({
             mode:       'edit',
             title:      connection.name,
-            showShare:  true,
+            showShare:  isShared ? false : true,
             saving:     false
           });
 

@@ -83,6 +83,8 @@ var ConnectionForm = React.createClass({
       body.strategy = 'oauth2';
     }
 
+    body.isShared = this.state.defaultValue.isShared;
+
     return body;
   },
   render: function () {
