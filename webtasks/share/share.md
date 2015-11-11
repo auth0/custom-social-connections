@@ -14,7 +14,7 @@ To deploy **Share Webtask**, you'll need the following:
 ## How to deploy
 
 ```
-wt create share.js --secret GITHUB_TOKEN=[YOUR-TOKEN-HERE]
+wt create share.js --name share-task --secret GITHUB_TOKEN=[YOUR-TOKEN-HERE] 
 ```
 
 ## How to make a request
