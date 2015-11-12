@@ -17,6 +17,11 @@ To deploy **Share Webtask**, you'll need the following:
 wt create share.js --name share-task --secret GITHUB_TOKEN=[YOUR-TOKEN-HERE] 
 ```
 
+## How to run tests
+
+* Install Mocha - `npm install mocha -g`
+* Run `mocha share.test.js`
+
 ## How to make a request
 
 `POST` to [WEBTASK-URL] with the following body:
