@@ -7,8 +7,11 @@ The application provides:
 - Create a new custom connection
 - Configure a custom connection based on existing templates
 - Share custom connection
+- Try a custom connection
 
-Live demo at [http://auth0.github.io/custom-oauth2-dashboard](http://jcenturion.github.io/dashboard/).
+![](https://raw.githubusercontent.com/auth0/custom-oauth2-dashboard/gh-pages/assets/img/1-Dashboard.png)
+
+Live demo at [http://auth0.github.io/custom-oauth2-dashboard](http://auth0.github.io/custom-oauth2-dashboard/).
 
 ## What is Auth0?
 
@@ -41,12 +44,11 @@ To run it locally, you'll need the following:
 
 ### First Time Setup
 
-1. Install gulp globally - `npm install --global gulp`
 1. Install NPM packages - `npm install`
 
 ### Running the server
 
-    $ gulp
+    $ npm start
     $ open http://localhost:3000
 
 ## Author

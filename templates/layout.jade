@@ -1,0 +1,66 @@
+doctype html
+html
+  head
+    block title
+      title Auth0 Extension
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=Edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='description', content='#{description}')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='shortcut icon', href='https://cdn.auth0.com/styleguide/2.0.1/lib/logos/img/favicon.png')
+    link(rel='apple-touch-icon', href='apple-touch-icon.png')
+
+    link(rel='stylesheet', type='text/css', href='https://cdn.auth0.com/manage/v0.3.973/css/index.min.css')
+
+    link(rel='stylesheet', type='text/css', href='@assets_baseurl/css/style.css')
+
+    script(type='text/javascript', src='https://code.jquery.com/jquery-2.1.4.min.js')
+    script(type='text/javascript', src='https://fb.me/react-0.14.0.min.js')
+    script(type='text/javascript', src='https://fb.me/react-dom-0.14.0.js')
+    script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js')
+    script(type='text/javascript', src='https://cdn.auth0.com/js/jwt-decode-1.4.0.min.js')
+    script(type='text/javascript', src='https://cdn.auth0.com/js/navbar-1.0.0.min.js')
+
+    script(type='text/javascript').
+      if (!sessionStorage.getItem("token")) {
+        window.location.href = '#{baseUrl}/login';
+      }
+
+  body
+    header.dashboard-header(style='background-color: #fbfbfb')
+      nav.navbar.navbar-default(role='navigation')
+        .container
+          .navbar-header
+            h1.navbar-brand
+              a(href='http://manage.auth0.com/')
+                span Auth0
+          #navbar-collapse.collapse.navbar-collapse
+          script(type='text/babel').
+            ReactDOM.render(
+              <Navbar baseUrl="#{baseUrl}"/>,
+              document.getElementById('navbar-collapse')
+            );
+    .container
+      .row
+        #sidebar.col-xs-2
+          a.visible-phone.hide(href='#')
+            i.icon.icon-budicon-497 Dashboard
+          .sidebar-fixed
+            ul
+              li.connections-tab.submenu.active
+                a(href='#')
+                  i.icon.icon-budicon-339
+                  span  Connections
+                ul
+                  li.active
+                    a(href='#')
+                      i.icon.icon-budicon-519
+                      span Custom
+              li
+                a(href='https://manage.auth0.com')
+                  span Back to Dashboard
+            .sidebar-footer-links
+
+        section#dashboard.content-page.current
+          block content
