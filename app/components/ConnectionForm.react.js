@@ -10,6 +10,7 @@ var ConnectionForm = React.createClass({
   propTypes: {
     mode:         React.PropTypes.string,
     defaultValue: React.PropTypes.object,
+    onShare:      React.PropTypes.func
   },
   getInitialState: function () {
     return {
@@ -93,7 +94,8 @@ var ConnectionForm = React.createClass({
         <div className="connection-name form-group">
           <div className="info-area" style={this.state.infoStyle}>
             <div className="alert alert-success" role="alert" style={{marginBottom: '0'}}>
-              <i className="confetti-ball"></i> Looks like you created your own custom connection. The Auth0 community will be happy. You can share your creation by clicking on <strong>Share</strong>.
+              <i className="confetti-ball"></i> Looks like you created your own custom connection. The Auth0 community will be happy.
+              You can share your creation by clicking on <strong><a href="#" onClick={this.props.onShare}>Share</a></strong>.
             </div>
           </div>
 

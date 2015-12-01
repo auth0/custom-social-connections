@@ -32,12 +32,12 @@
 
   try {
     decoded             = jwt_decode(token);
-    context.env.apiUrl  = decoded.aud;
-    context.env.userUrl = decoded.aud.replace('/api/v2', '/authorize');
+    context.env.apiUrl  = decoded.aud[0];
+    context.env.userUrl = decoded.aud[0].replace('/api/v2', '/authorize');
     context.env.token   = token;
 
     var options = {
-      url:         decoded.aud + 'clients',
+      url:         context.env.apiUrl + 'clients',
       type:        'GET',
       contentType: 'application/json',
       headers:     {
@@ -49,7 +49,7 @@
       .then(function (clients) {
         var userId = clients.pop().owners.pop();
 
-        options.url = decoded.aud + 'users/' + userId;
+        options.url = context.env.apiUrl + 'users/' + userId;
 
         $.ajax(options)
           .then(function (user) {

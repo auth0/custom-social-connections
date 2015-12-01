@@ -27,3 +27,8 @@ div.CodeMirror {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
+div.main-loading-container {
+  position: relative;
+  height: 20px;
+}

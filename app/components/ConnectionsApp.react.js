@@ -21,7 +21,19 @@ var ConnectionsApp = React.createClass({
             </p>
             <div className="alert alert-info">
               <strong>Share?</strong>
-              <span>&nbsp;You own custom connections. The Auth0 community will be happy if you share them.&nbsp;</span><a href="#">Click here</a><span>&nbsp;to share your connections.</span>
+              <span>&nbsp;You own custom connections. The Auth0 community will be happy if you share them.</span>
+            </div>
+          </div>
+          <div className="main-loading-container">
+            <div className="spin-container loading-spin  ">
+              <div className="spinner-css small">
+                <span className="side sp_left">
+                  <span className="fill"></span>
+                </span>
+                <span className="side sp_right">
+                  <span className="fill"></span>
+                </span>
+              </div>
             </div>
           </div>
           <Switchboard onChange={this._onChange} onClick={this._onClick}/>

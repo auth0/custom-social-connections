@@ -37,7 +37,7 @@ var ConnectionModal = React.createClass({
 
   componentDidMount: function () {
     this.setState({
-      connectionForm:   React.render(<ConnectionForm defaultValue={this.state.connection} mode={this.state.mode}/>, document.getElementById('connectionForm')),
+      connectionForm:   React.render(<ConnectionForm onShare={this._share} defaultValue={this.state.connection} mode={this.state.mode}/>, document.getElementById('connectionForm')),
       applicationsForm: React.render(<Applications defaultValue={this.state.connection.enabled_clients}/>, document.getElementById('applicationsForm'))
     });
   },
