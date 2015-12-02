@@ -112,6 +112,7 @@ var ConnectionForm = React.createClass({
           defaultValue={this.state.defaultValue.name}
           readOnly={this.state.mode === '_update'}
           required={true}
+          autoFocus={this.state.mode === '_create' ? true : false}
           ref="name"/>
 
         <FormTextGroup
@@ -124,6 +125,7 @@ var ConnectionForm = React.createClass({
             title="Client ID"
             placeholder="Client ID"
             defaultValue={this.state.defaultValue.options.client_id}
+            autoFocus={this.state.mode === '_update' ? true : false}
             ref="options.client_id"/>
 
           <FormTextGroup
