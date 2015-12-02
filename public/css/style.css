@@ -32,3 +32,34 @@ div.main-loading-container {
   position: relative;
   height: 20px;
 }
+
+.btn-link {
+  border: 0 !important;
+  color: #333;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
+.btn-link:hover span {
+  text-decoration: underline !important;
+}
+
+.btn-link:hover {
+  text-decoration: none !important;
+}
+
+.btn-link:focus {
+ text-decoration: none !important;
+ outline: none;
+ color: #333;
+}
+
+/*
+.btn-link i:hover {
+  text-transform: none;
+
+}*/
+
+.btn-link:hover {
+  color: red;
+}

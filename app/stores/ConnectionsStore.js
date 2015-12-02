@@ -31,6 +31,14 @@ var ConnectionsStore = assign({}, EventEmitter.prototype, {
       }.bind(this));
   },
 
+  remove: function (id, connection) {
+    return client.remove(id)
+      .then(function (connection) {
+        this.getAll();
+        return connection;
+      }.bind(this));
+  },
+
   share: function (body) {
     return client.share(body);
   },

@@ -51,7 +51,7 @@ var ConnectionsApp = React.createClass({
   },
 
   _renderConnectionModal: function (connection) {
-    var mode  = connection.isTemplate ? 'create': 'edit';
+    var mode  = connection.isTemplate ? '_create': '_update';
     var title = connection.isTemplate ? null: connection.name;
 
     React.render(<ConnectionModal title={title} connection={connection} mode={mode}/>, document.getElementById('connectionModal'));

@@ -18,8 +18,15 @@ var Applications = React.createClass({
 
     return {
       clients: [],
-      selectedClients: selectedClients
+      selectedClients: selectedClients,
+      successMessage: {display: 'none'}
     };
+  },
+
+  showSuccessMessage: function () {
+    this.setState({
+      successMessage: {}
+    });
   },
 
   isChecked: function (clientId) {
@@ -61,8 +68,14 @@ var Applications = React.createClass({
 
     return (
       <div className="apps-selector-container">
-        <div className="modal-body">
-          <div className="info-area"></div>
+        <div className="modal-body" style={{paddingTop: '0', paddingBottom: '15px'}}>
+          <div className="connection-name form-group">
+            <div className="info-area" style={this.state.successMessage}>
+              <div className="alert alert-success" role="alert" style={{marginBottom: '0'}}>
+                Apps configuration saved successfully
+              </div>
+            </div>
+          </div>
           <div className="client-list">
             {apps}
           </div>

@@ -47,10 +47,10 @@ var Switchboard = React.createClass({
     var templates = this.state.templates;
     var source = templates.slice(0, templates.length);
 
-    templates.forEach(function (template) {
-      template.isTemplate = true;
-      template.isShared   = true;
-    });
+    // templates.forEach(function (template) {
+    //   template.isTemplate = true;
+    //   template.isShared   = true;
+    // });
 
     if (connections) {
       connections.forEach(function (connection) {
@@ -59,7 +59,7 @@ var Switchboard = React.createClass({
         for (var i = 0; i < source.length; i++) {
           if (source[i].name === connection.name) {
             source[i]            = connection;
-            source[i].isTemplate = false;
+            source[i].isTemplate = true;
             source[i].isShared   = true;
             flag                 = false;
             break;

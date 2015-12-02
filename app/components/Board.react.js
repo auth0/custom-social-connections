@@ -35,11 +35,6 @@ var Board = React.createClass({
         <div className="provider-name" onClick={this._onClick}>
           {this.props.connection.name}
         </div>
-        <div className="switch-indicators">
-          <a href={this.generateTryItUrl()} target="_blank" className="test indicator" title="Try Connection">
-           <span className="text">Try</span> <span className="play-icon icon-budicon-461"></span>
-          </a>
-        </div>
         <div className="switch-title hide" style={{display: 'block'}}>
           {this.props.connection.name}
         </div>

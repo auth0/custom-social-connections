@@ -26,12 +26,14 @@ var ConnectionModal = React.createClass({
                           ].join('\n')
       }}, enabled_clients: undefined},
       title:          this.props.title || 'New Connection',
-      mode:           this.props.mode || 'create',
+      mode:           this.props.mode || '_create',
       showPrLocation: false,
-      showShare:      this.props.mode === 'edit' ? (this.props.connection.isShared === true ? false : true) : false,
+      showShare:      this.props.mode === '_update' ? (this.props.connection.isShared === true ? false : true) : false,
+      showDelete:     this.props.mode === '_update' ? (this.props.connection.isTemplate === true ? false : true) : false,
       prLocation:     '#',
       sharing:        false,
-      saving:         false
+      saving:         false,
+      deleting:       false,
     };
   },
 
@@ -96,11 +98,51 @@ var ConnectionModal = React.createClass({
     }.bind(this));
   },
 
-  _save: function () {
+  _create: function (connection, isShared) {
+    ConnectionsStore.create(connection)
+      .then(function (connection) {
+        this._showSettings();
+
+        this.setState({
+          mode:       '_update',
+          title:      connection.name,
+          showShare:  isShared ? false : true,
+          saving:     false
+        });
+
+        if (!isShared) {
+          this.state.connectionForm.showInfo();
+        }
+
+        this.state.connectionForm.setState({
+          mode:         '_update',
+          defaultValue: connection,
+        });
+
+      }.bind(this));
+  },
+
+  _update: function (connection, id, context) {
+    ConnectionsStore.update(id, connection)
+      .then(function () {
+        context.showSuccessMessage();
+
+        setTimeout(function () {
+          context.setState({
+            successMessage: {display: 'none'}
+          });
+        }.bind(this), 5000);
+
+        this.setState({
+          saving: false
+        });
+      }.bind(this));
+  },
+
+  _save: function (context) {
     var clients    = this.state.applicationsForm.getSelectedClients();
     var connection = this.state.connectionForm.getConnection();
-    var id         = connection.id;
-    var isShared   = connection.isShared;
+    var param      = this.state.mode === '_create' ? connection.isShared : connection.id;
 
     connection.enabled_clients = Object.keys(clients);
     delete connection.id;
@@ -108,44 +150,29 @@ var ConnectionModal = React.createClass({
 
     this.setState({saving: true});
 
-    if (this.state.mode === 'create') {
-      ConnectionsStore.create(connection)
-        .then(function (connection) {
-          this._showSettings();
-          this._showTryIt();
-          this.setState({
-            mode:       'edit',
-            title:      connection.name,
-            showShare:  isShared ? false : true,
-            saving:     false
-          });
+    this[this.state.mode](connection, param, context);
+  },
 
-          if (!isShared) {
-            this.state.connectionForm.showInfo();
-          }
+  _saveApplications: function () {
+    this._save(this.state.applicationsForm);
+  },
 
-          this.state.connectionForm.setState({
-            mode:         'edit',
-            defaultValue: connection,
-          });
+  _saveConnection: function () {
+    this._save(this.state.connectionForm);
+  },
 
-        }.bind(this));
-    }
+  _delete: function () {
+    var connection = this.state.connectionForm.getConnection();
 
-    if (this.state.mode === 'edit') {
-      ConnectionsStore.update(id, connection)
-        .then(function () {
-          this._showSettings();
-          this.state.connectionForm.showSuccessMessage();
-          this._showTryIt();
-          this.state.connectionForm.setState({
-            infoStyle: {display: 'none'}
-          });
-          this.setState({
-            saving: false
-          });
-        }.bind(this));
-    }
+    this.setState({deleting: true});
+
+    ConnectionsStore.remove(connection.id)
+      .then(function () {
+        this.setState({
+          deleting: false
+        });
+        this._close();
+      }.bind(this));
   },
 
   generateTryItUrl: function () {
@@ -162,7 +189,7 @@ var ConnectionModal = React.createClass({
   },
 
   render: function () {
-    var hide = this.state.mode === 'create';
+    var hide = this.state.mode === '_create';
 
     return (
       <div
@@ -188,41 +215,55 @@ var ConnectionModal = React.createClass({
             <div className="tab-content">
 
                 <div id="apps-selector" className={classNames({'tab-pane': true, 'active': this.state.showApps})}>
-                  <form className="connection-form form-horizontal">
+                  <form className="connection-form form-horizontal" onSubmit={this._saveApplications}>
                     <div id="applicationsForm"></div>
+                    <div className="modal-footer text-center">
+                      <button type="submit" className="btn btn-primary save">
+                        <span className={classNames({'hide': this.state.saving})}>Save</span>
+                        <span className={classNames({'hide': !this.state.saving})}>Saving ...</span>
+                      </button>
+                    </div>
                   </form>
                 </div>
+
                 <div id="connection-settings" className={classNames({'tab-pane': true, 'active': this.state.showSettings})}>
-                  <form className="connection-form form-horizontal">
+                  <form className="connection-form form-horizontal" onSubmit={this._saveConnection}>
                     <div id="connectionForm"></div>
+                    <div className="modal-footer text-center">
+                      <button disabled={this.state.saving} type="submit" className="btn btn-primary save">
+                        <span className={classNames({'hide': this.state.saving})}>Save</span>
+                        <span className={classNames({'hide': !this.state.saving})}>Saving ...</span>
+                      </button>
+
+                      <button disabled={this.state.sharing} href="#" className={classNames({
+                        'btn': true,
+                        'btn-default': true,
+                        'hide': !this.state.showShare
+                      })} onClick={this._share}>
+                        <i className="icon-budicon-339"></i>
+                        <span className={classNames({'hide': this.state.sharing})}>Share</span>
+                        <span className={classNames({'hide': !this.state.sharing})}>Sharing ...</span>
+                      </button>
+
+                      <button href={this.state.prLocation} target="_blank" className={classNames({
+                        'btn': true,
+                        'btn-default': true,
+                        'hide': !this.state.showPrLocation
+                      })}>
+                        <i className="icon-budicon-339"></i><span className="text">View PR</span>
+                      </button>
+
+                      <button disabled={this.state.deleting} href="#" className={classNames({
+                        'btn': true,
+                        'btn-link': true,
+                        'hide': !this.state.showDelete
+                      })} onClick={this._delete}>
+                        <i className="icon-budicon-263"></i>
+                        <span className={classNames({'hide': this.state.deleting})}>Delete</span>
+                        <span className={classNames({'hide': !this.state.deleting})}>Deleting ...</span>
+                      </button>
+                    </div>
                   </form>
-                </div>
-
-                <div className="modal-footer text-center">
-                  <button className="btn btn-primary save" onClick={this._save}>
-                    <span className={classNames({'hide': this.state.saving})}>Save</span>
-                    <span className={classNames({'hide': !this.state.saving})}>Saving ...</span>
-                  </button>
-
-                  <a href={this.generateTryItUrl()} target="_blank" className={classNames({'btn': true, 'btn-success': true, 'hide': hide})}>
-                    <i className="icon-budicon-187"></i><span className="text">Try</span>
-                  </a>
-                  <a href="#" className={classNames({
-                    'btn': true,
-                    'btn-default': true,
-                    'hide': !this.state.showShare
-                  })} onClick={this._share} disabled={this.state.sharing}>
-                    <i className="icon-budicon-339"></i>
-                    <span className={classNames({'hide': this.state.sharing})}>Share</span>
-                    <span className={classNames({'hide': !this.state.sharing})}>Sharing ...</span>
-                  </a>
-                  <a href={this.state.prLocation} target="_blank" className={classNames({
-                    'btn': true,
-                    'btn-default': true,
-                    'hide': !this.state.showPrLocation
-                  })}>
-                    <i className="icon-budicon-339"></i><span className="text">View PR</span>
-                  </a>
                 </div>
 
             </div>

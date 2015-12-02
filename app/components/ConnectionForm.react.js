@@ -76,11 +76,11 @@ var ConnectionForm = React.createClass({
       }.bind(this));
     }.bind(this));
 
-    if (this.state.mode === 'edit') {
+    if (this.state.mode === '_update') {
       body.id = this.state.defaultValue.id;
     }
 
-    if (this.state.mode === 'create') {
+    if (this.state.mode === '_create') {
       body.strategy = 'oauth2';
     }
 
@@ -110,7 +110,8 @@ var ConnectionForm = React.createClass({
           title="Name"
           placeholder="The name of the connection"
           defaultValue={this.state.defaultValue.name}
-          readOnly={this.state.mode === 'edit'}
+          readOnly={this.state.mode === '_update'}
+          required={true}
           ref="name"/>
 
         <FormTextGroup
