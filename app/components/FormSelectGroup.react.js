@@ -5,9 +5,9 @@ var FormSelectGroup = React.createClass({
   mixins: [FormControlMixin],
   propTypes: {
     title:        React.PropTypes.string.isRequired,
-    defaultValue: React.PropTypes.string.isRequired,
     options:      React.PropTypes.array.isRequired,
-    readOnly:     React.PropTypes.bool
+    defaultValue: React.PropTypes.string,
+    disabled:     React.PropTypes.bool
   },
   render: function () {
     var options = this.props.options.map(function (option, index) {
@@ -23,7 +23,7 @@ var FormSelectGroup = React.createClass({
           <select
             className="form-control"
             value={this.state.value}
-            readOnly={this.props.readOnly}
+            disabled={this.props.disabled}
             onChange={this._handleChange}>
             {options}
           </select>

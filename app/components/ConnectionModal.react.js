@@ -4,6 +4,7 @@ var classNames = require('classnames');
 
 var ConnectionForm = require('./ConnectionForm.react');
 var Applications   = require('./Applications.react');
+var Try            = require('./Try.react');
 
 var ConnectionsStore = require('../stores/ConnectionsStore');
 
@@ -16,7 +17,7 @@ var ConnectionModal = React.createClass({
     return {
       showSettings:   true,
       showApps:       false,
-      showTryIt:      false,
+      showTry:        false,
       connection:     this.props.connection || {strategy:'oauth2', options: {scripts: {
         fetchUserProfile: [
                           'function(accessToken, ctx, cb) {',
@@ -38,9 +39,11 @@ var ConnectionModal = React.createClass({
   },
 
   componentDidMount: function () {
+    // TODO: Use refs
     this.setState({
       connectionForm:   React.render(<ConnectionForm onShare={this._share} defaultValue={this.state.connection} mode={this.state.mode}/>, document.getElementById('connectionForm')),
-      applicationsForm: React.render(<Applications defaultValue={this.state.connection.enabled_clients}/>, document.getElementById('applicationsForm'))
+      applicationsForm: React.render(<Applications defaultValue={this.state.connection.enabled_clients}/>, document.getElementById('applicationsForm')),
+      tryFrom:          React.render(<Try connection={this.state.connection} clientIds={this.state.connection.enabled_clients}/>, document.getElementById('tryForm'))
     });
   },
 
@@ -51,20 +54,24 @@ var ConnectionModal = React.createClass({
   _showSettings: function () {
     this.setState({
       showSettings: true,
-      showApps:     false
+      showApps:     false,
+      showTry:      false
     });
   },
 
   _showApps: function () {
     this.setState({
       showSettings: false,
-      showApps:     true
+      showApps:     true,
+      showTry:      false
     });
   },
 
-  _showTryIt: function () {
+  _showTry: function () {
     this.setState({
-      showTryIt: true
+      showTry:      true,
+      showSettings: false,
+      showApps:     false
     });
   },
 
@@ -175,19 +182,6 @@ var ConnectionModal = React.createClass({
       }.bind(this));
   },
 
-  generateTryItUrl: function () {
-    // // TODO: Extract to Mixin
-    return [
-      window.env.userUrl + '?',
-      'response_type=code',
-      '&scope=openid%20profile',
-      '&client_id=' + window.env.masterClientId,
-      '&prompt=consent',
-      '&connection=' + this.state.connection.name,
-      '&redirect_uri=https://manage.auth0.com/tester/callback?connection=' + this.state.connection.name
-    ].join('');
-  },
-
   render: function () {
     var hide = this.state.mode === '_create';
 
@@ -210,6 +204,7 @@ var ConnectionModal = React.createClass({
               <ul className="nav nav-tabs">
                 <li className={classNames({'active': this.state.showSettings})}><a href="#" onClick={this._showSettings}>Settings</a></li>
                 <li className={classNames({'active': this.state.showApps})}><a href="#" onClick={this._showApps}>Apps</a></li>
+                <li className={classNames({'active': this.state.showTry})}><a href="#" onClick={this._showTry}>Try</a></li>
               </ul>
             </div>
             <div className="tab-content">
@@ -266,6 +261,9 @@ var ConnectionModal = React.createClass({
                   </form>
                 </div>
 
+                <div id="try" className={classNames({'tab-pane': true, 'active': this.state.showTry})}>
+                  <div id="tryForm"></div>
+                </div>
             </div>
           </div>
         </div>
