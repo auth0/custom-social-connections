@@ -6,9 +6,10 @@ var ConnectionForm = require('./ConnectionForm.react');
 var Applications   = require('./Applications.react');
 var Try            = require('./Try.react');
 
-var ConnectionsStore = require('../stores/ConnectionsStore');
+var OperationsMixin = require('../mixins/OperationsMixin');
 
 var ConnectionModal = React.createClass({
+  mixins: [OperationsMixin],
   propTypes: {
     title: React.PropTypes.string,
     mode:  React.PropTypes.string
@@ -51,113 +52,16 @@ var ConnectionModal = React.createClass({
     React.unmountComponentAtNode(document.getElementById('connectionModal'));
   },
 
-  _showSettings: function () {
-    this.setState({
-      showSettings: true,
+  _showMe: function (active) {
+    var tabs = {
+      showSettings: false,
       showApps:     false,
       showTry:      false
-    });
-  },
+    };
 
-  _showApps: function () {
-    this.setState({
-      showSettings: false,
-      showApps:     true,
-      showTry:      false
-    });
-  },
+    tabs[active] = true;
 
-  _showTry: function () {
-    this.setState({
-      showTry:      true,
-      showSettings: false,
-      showApps:     false
-    });
-  },
-
-  _share: function () {
-    var connection = this.state.connectionForm.getConnection();
-
-    this.setState({sharing: true});
-
-    ConnectionsStore.share({
-      recipe:  connection.name,
-      userInfo:    window.env.user,
-      content: {
-        name:     connection.name,
-        strategy: 'oauth2',
-        options: {
-          authorizationURL: connection.options.authorizationURL,
-          tokenURL:         connection.options.tokenURL,
-          scope:            connection.options.scope,
-          scripts:          {
-            fetchUserProfile: connection.options.scripts.fetchUserProfile
-          }
-        }
-      }
-    }).then(function (data) {
-      this.setState({
-        showPrLocation: true,
-        showShare:      false,
-        prLocation:     data.link,
-        sharing:        false
-      });
-    }.bind(this));
-  },
-
-  _create: function (connection, isShared) {
-    ConnectionsStore.create(connection)
-      .then(function (connection) {
-        this._showSettings();
-
-        this.setState({
-          mode:       '_update',
-          title:      connection.name,
-          showShare:  isShared ? false : true,
-          saving:     false
-        });
-
-        if (!isShared) {
-          this.state.connectionForm.showInfo();
-        }
-
-        this.state.connectionForm.setState({
-          mode:         '_update',
-          defaultValue: connection,
-        });
-
-      }.bind(this));
-  },
-
-  _update: function (connection, id, context) {
-    ConnectionsStore.update(id, connection)
-      .then(function () {
-        context.showSuccessMessage();
-
-        setTimeout(function () {
-          context.setState({
-            successMessage: {display: 'none'}
-          });
-        }.bind(this), 5000);
-
-        this.setState({
-          saving: false
-        });
-      }.bind(this));
-  },
-
-  _save: function (context) {
-    var clients    = this.state.applicationsForm.getSelectedClients();
-    var connection = this.state.connectionForm.getConnection();
-    var param      = this.state.mode === '_create' ? connection.isShared : connection.id;
-
-    connection.enabled_clients = Object.keys(clients);
-    delete connection.id;
-    delete connection.isShared;
-
-    this.setState({saving: true});
-
-    this[this.state.mode](connection, param, context);
+    this.setState(tabs);
   },
 
   _saveApplications: function () {
@@ -166,20 +70,6 @@ var ConnectionModal = React.createClass({
 
   _saveConnection: function () {
     this._save(this.state.connectionForm);
-  },
-
-  _delete: function () {
-    var connection = this.state.connectionForm.getConnection();
-
-    this.setState({deleting: true});
-
-    ConnectionsStore.remove(connection.id)
-      .then(function () {
-        this.setState({
-          deleting: false
-        });
-        this._close();
-      }.bind(this));
   },
 
   render: function () {
@@ -202,9 +92,9 @@ var ConnectionModal = React.createClass({
             </div>
             <div className="form-wrapper">
               <ul className="nav nav-tabs">
-                <li className={classNames({'active': this.state.showSettings})}><a href="#" onClick={this._showSettings}>Settings</a></li>
-                <li className={classNames({'active': this.state.showApps})}><a href="#" onClick={this._showApps}>Apps</a></li>
-                <li className={classNames({'active': this.state.showTry})}><a href="#" onClick={this._showTry}>Try</a></li>
+                <li className={classNames({'active': this.state.showSettings})}><a href="#" onClick={this._showMe.bind(this, 'showSettings')}>Settings</a></li>
+                <li className={classNames({'active': this.state.showApps})}><a href="#"     onClick={this._showMe.bind(this, 'showApps')}>Apps</a></li>
+                <li className={classNames({'active': this.state.showTry})}><a href="#"      onClick={this._showMe.bind(this, 'showTry')}>Try</a></li>
               </ul>
             </div>
             <div className="tab-content">
