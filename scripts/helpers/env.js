@@ -4,7 +4,7 @@
   context.env = {
     clientId:    'N3PAwyqXomhNu6IWivtsa3drBfFjmWJL',
     authUrl:     'https://auth0.auth0.com/i/oauth2/authorize',
-    callbackUrl: 'http://jcenturion.github.com/dashboard/callback.html',
+    callbackUrl: 'http://auth0.github.io/custom-oauth2-dashboard/callback.html',
     scopes:      'read:connections create:connections update:connections delete:connections read:clients read:users',
     s3:          {
       accessKey: '',
