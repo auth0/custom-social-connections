@@ -129,7 +129,7 @@ var ConnectionModal = React.createClass({
 
                       <button disabled={this.state.deleting} href="#" className={classNames({
                         'btn': true,
-                        'btn-link': true,
+                        'btn-danger': true,
                         'hide': !this.state.showDelete
                       })} onClick={this._delete}>
                         <i className="icon-budicon-263"></i>
