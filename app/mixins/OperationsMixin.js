@@ -27,7 +27,13 @@ var OperationsMixin = {
         });
 
         this.state.tryFrom.setState({
-          mode:         '_update'
+          mode:         '_update',
+          clientIds:    connection.enabled_clients,
+          connection:   connection
+        });
+
+        this.state.tryFrom.refs.application.setState({
+          value: connection.enabled_clients.slice(0,1).shift()
         });
 
       }.bind(this));

@@ -13,6 +13,7 @@ var Try = React.createClass({
   getInitialState: function () {
     return {
       clientIds:      this.props.clientIds || [],
+      connection:     this.props.connection,
       enabledClients: [],
       modes:          [{name: 'code', value: 'code'}, {name: 'codes', value: 'codes'}],
       mode:           this.props.mode
@@ -24,8 +25,8 @@ var Try = React.createClass({
       'response_type=code',
       '&scope=openid%20profile',
       '&client_id=' + this.refs.application.getValue(),
-      '&connection=' + this.props.connection.name,
-      '&redirect_uri=https://manage.auth0.com/tester/callback?connection=' + this.props.connection.name
+      '&connection=' + this.state.connection.name,
+      '&redirect_uri=https://manage.auth0.com/tester/callback?connection=' + this.state.connection.name
     ].join('');
   },
 
