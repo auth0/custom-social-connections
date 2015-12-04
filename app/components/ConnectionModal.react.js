@@ -43,8 +43,8 @@ var ConnectionModal = React.createClass({
     // TODO: Use refs
     this.setState({
       connectionForm:   React.render(<ConnectionForm onShare={this._share} defaultValue={this.state.connection} mode={this.state.mode}/>, document.getElementById('connectionForm')),
-      applicationsForm: React.render(<Applications defaultValue={this.state.connection.enabled_clients}/>, document.getElementById('applicationsForm')),
-      tryFrom:          React.render(<Try connection={this.state.connection} clientIds={this.state.connection.enabled_clients}/>, document.getElementById('tryForm'))
+      applicationsForm: React.render(<Applications mode={this.state.mode} defaultValue={this.state.connection.enabled_clients}/>, document.getElementById('applicationsForm')),
+      tryFrom:          React.render(<Try mode={this.state.mode} connection={this.state.connection} clientIds={this.state.connection.enabled_clients}/>, document.getElementById('tryForm'))
     });
   },
 
@@ -64,11 +64,13 @@ var ConnectionModal = React.createClass({
     this.setState(tabs);
   },
 
-  _saveApplications: function () {
+  _saveApplications: function (e) {
+    e.preventDefault();
     this._save(this.state.applicationsForm);
   },
 
-  _saveConnection: function () {
+  _saveConnection: function (e) {
+    e.preventDefault();
     this._save(this.state.connectionForm);
   },
 
@@ -98,19 +100,6 @@ var ConnectionModal = React.createClass({
               </ul>
             </div>
             <div className="tab-content">
-
-                <div id="apps-selector" className={classNames({'tab-pane': true, 'active': this.state.showApps})}>
-                  <form className="connection-form form-horizontal" onSubmit={this._saveApplications}>
-                    <div id="applicationsForm"></div>
-                    <div className="modal-footer text-center">
-                      <button type="submit" className="btn btn-primary save">
-                        <span className={classNames({'hide': this.state.saving})}>Save</span>
-                        <span className={classNames({'hide': !this.state.saving})}>Saving ...</span>
-                      </button>
-                    </div>
-                  </form>
-                </div>
-
                 <div id="connection-settings" className={classNames({'tab-pane': true, 'active': this.state.showSettings})}>
                   <form className="connection-form form-horizontal" onSubmit={this._saveConnection}>
                     <div id="connectionForm"></div>
@@ -148,6 +137,20 @@ var ConnectionModal = React.createClass({
                         <span className={classNames({'hide': !this.state.deleting})}>Deleting ...</span>
                       </button>
                     </div>
+                  </form>
+                </div>
+
+                <div id="apps-selector" className={classNames({'tab-pane': true, 'active': this.state.showApps})}>
+                  <form className="connection-form form-horizontal" onSubmit={this._saveApplications}>
+                    <div id="applicationsForm"></div>
+                    <fieldset disabled={this.state.mode === '_create'}>
+                      <div className="modal-footer text-center">
+                        <button type="submit" className="btn btn-primary save">
+                          <span className={classNames({'hide': this.state.saving})}>Save</span>
+                          <span className={classNames({'hide': !this.state.saving})}>Saving ...</span>
+                        </button>
+                      </div>
+                    </fieldset>
                   </form>
                 </div>
 

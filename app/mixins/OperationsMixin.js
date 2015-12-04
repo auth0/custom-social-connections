@@ -4,7 +4,7 @@ var OperationsMixin = {
   _create: function (connection, isShared) {
     ConnectionsStore.create(connection)
       .then(function (connection) {
-        this._showSettings();
+        this._showMe('showSettings');
 
         this.setState({
           mode:       '_update',
@@ -20,6 +20,14 @@ var OperationsMixin = {
         this.state.connectionForm.setState({
           mode:         '_update',
           defaultValue: connection,
+        });
+
+        this.state.applicationsForm.setState({
+          mode:         '_update'
+        });
+
+        this.state.tryFrom.setState({
+          mode:         '_update'
         });
 
       }.bind(this));

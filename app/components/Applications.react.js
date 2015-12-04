@@ -5,7 +5,8 @@ var ClientsStore = require('../stores/ClientsStore');
 
 var Applications = React.createClass({
   propTypes: {
-    defaultValue: React.PropTypes.array
+    defaultValue: React.PropTypes.array,
+    mode:         React.PropTypes.string
   },
   getInitialState: function () {
     var selectedClients = {};
@@ -19,7 +20,8 @@ var Applications = React.createClass({
     return {
       clients: [],
       selectedClients: selectedClients,
-      successMessage: {display: 'none'}
+      successMessage: {display: 'none'},
+      mode:           this.props.mode
     };
   },
 
@@ -69,6 +71,15 @@ var Applications = React.createClass({
     return (
       <div className="apps-selector-container">
         <div className="modal-body" style={{paddingTop: '0', paddingBottom: '15px'}}>
+
+          <div className="connection-name form-group">
+            <div className="info-area" style={this.state.mode === '_create' ? {} : {display: 'none'}}>
+              <div className="alert alert-info" role="alert" style={{marginBottom: '0'}}>
+                You need to configure this connection in order to use it in your apps.
+              </div>
+            </div>
+          </div>
+
           <div className="connection-name form-group">
             <div className="info-area" style={this.state.successMessage}>
               <div className="alert alert-success" role="alert" style={{marginBottom: '0'}}>
@@ -76,9 +87,11 @@ var Applications = React.createClass({
               </div>
             </div>
           </div>
-          <div className="client-list">
-            {apps}
-          </div>
+          <fieldset disabled={this.state.mode === '_create'}>
+            <div className="client-list">
+              {apps}
+            </div>
+          </fieldset>
         </div>
       </div>
     );
