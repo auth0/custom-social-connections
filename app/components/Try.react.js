@@ -96,7 +96,6 @@ var Try = React.createClass({
         <div className="modal-footer text-center">
           <fieldset disabled={this.state.mode === '_create'}>
             <button className="btn btn-success" onClick={this._onClick}>
-             <i className="icon-budicon-187"></i>
              <span className="text">Try</span>
             </button>
           </fieldset>

@@ -2,6 +2,8 @@
   'use strict';
 
   context.env = {
+    // clientId:    'sOZFZyH5MXSRH3uqmjjHf5eT7GYWAjIx',
+    // authUrl:     'https://auth0.dev.auth0.com/i/oauth2/authorize',
     clientId:    'N3PAwyqXomhNu6IWivtsa3drBfFjmWJL',
     authUrl:     'https://auth0.auth0.com/i/oauth2/authorize',
     callbackUrl: 'http://localhost:3000/callback.html',

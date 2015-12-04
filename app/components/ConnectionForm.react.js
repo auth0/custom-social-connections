@@ -108,7 +108,7 @@ var ConnectionForm = React.createClass({
 
         <FormTextGroup
           title="Name"
-          placeholder="The name of the connection"
+          helpText="The name of the connection"
           defaultValue={this.state.defaultValue.name}
           readOnly={this.state.mode === '_update'}
           required={true}
@@ -123,32 +123,35 @@ var ConnectionForm = React.createClass({
         <div className="authentication_area">
           <FormTextGroup
             title="Client ID"
-            placeholder="Client ID"
+            helpText="Your provider client ID"
             defaultValue={this.state.defaultValue.options.client_id}
             autoFocus={this.state.mode === '_update' ? true : false}
             ref="options.client_id"/>
 
           <FormTextGroup
             title="Client Secret"
-            placeholder="Client Secret"
+            helpText="Your provider client secret"
             defaultValue={this.state.defaultValue.options.client_secret}
             ref="options.client_secret"/>
 
           <FormTextGroup
             title="Authorization URL"
-            placeholder="Authorization URL"
+            helpText="The URL where the transaction begins"
+            placeholder="https://your.oauth2.server/oauth2/authorize"
             defaultValue={this.state.defaultValue.options.authorizationURL}
             ref="options.authorizationURL"/>
 
           <FormTextGroup
             title="Token URL"
-            placeholder="Token URL"
+            placeholder="https://your.oauth2.server/oauth2/token"
+            helpText="The URL Auth0 will use to exchange the code for an access_token"
             defaultValue={this.state.defaultValue.options.tokenURL}
             ref="options.tokenURL"/>
 
           <FormTextGroup
             title="Scope"
-            placeholder="scope"
+            placeholder="public"
+            helpText="The scope parameters that you want to request consent for"
             defaultValue={this.state.defaultValue.options.scope}
             ref="options.scope"/>
 

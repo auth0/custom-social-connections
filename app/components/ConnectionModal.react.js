@@ -114,7 +114,6 @@ var ConnectionModal = React.createClass({
                         'btn-default': true,
                         'hide': !this.state.showShare
                       })} onClick={this._share}>
-                        <i className="icon-budicon-339"></i>
                         <span className={classNames({'hide': this.state.sharing})}>Share</span>
                         <span className={classNames({'hide': !this.state.sharing})}>Sharing ...</span>
                       </button>
@@ -124,7 +123,7 @@ var ConnectionModal = React.createClass({
                         'btn-default': true,
                         'hide': !this.state.showPrLocation
                       })}>
-                        <i className="icon-budicon-339"></i><span className="text">View PR</span>
+                        <span className="text">View PR</span>
                       </button>
 
                       <button disabled={this.state.deleting} href="#" className={classNames({
@@ -132,7 +131,6 @@ var ConnectionModal = React.createClass({
                         'btn-danger': true,
                         'hide': !this.state.showDelete
                       })} onClick={this._delete}>
-                        <i className="icon-budicon-263"></i>
                         <span className={classNames({'hide': this.state.deleting})}>Delete</span>
                         <span className={classNames({'hide': !this.state.deleting})}>Deleting ...</span>
                       </button>

@@ -9,13 +9,14 @@ var FormTextGroup = React.createClass({
     defaultValue: React.PropTypes.string,
     readOnly:     React.PropTypes.bool,
     required:     React.PropTypes.bool,
-    autoFocus:    React.PropTypes.bool
+    autoFocus:    React.PropTypes.bool,
+    helpText:     React.PropTypes.string
   },
   render: function () {
     return (
       <div className="form-group">
-        <label className="control-label col-xs-3">{this.props.title}</label>
-        <div className="controls col-xs-9">
+        <label className="col-xs-12 col-sm-4 col-md-3 control-label col-left">{this.props.title}</label>
+        <div className="col-xs-12 col-sm-8 col-md-9 col-right">
           <input
             autoFocus={this.props.autoFocus}
             required={this.props.required}
@@ -28,6 +29,7 @@ var FormTextGroup = React.createClass({
             readOnly={this.props.readOnly}
             onChange={this._handleChange}
           ></input>
+          <span className="help-block">{this.props.helpText}</span>
         </div>
       </div>
     );
