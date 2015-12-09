@@ -4,17 +4,20 @@ var FormControlMixin = require('../mixins/FormControlMixin');
 var FormSelectGroup = React.createClass({
   mixins: [FormControlMixin],
   propTypes: {
-    title:        React.PropTypes.string.isRequired,
-    options:      React.PropTypes.array.isRequired,
-    defaultValue: React.PropTypes.string,
-    disabled:     React.PropTypes.bool
+    title:               React.PropTypes.string.isRequired,
+    options:             React.PropTypes.array.isRequired,
+    defaultValue:        React.PropTypes.string,
+    disabled:            React.PropTypes.bool,
+    optionsDisableRule:  React.PropTypes.func
   },
   render: function () {
-    var options = this.props.options.map(function (option, index) {
+    var isDisabled = this.props.optionsDisableRule || function () { return false; };
+    var options    = this.props.options.map(function (option, index) {
+      var disabled = isDisabled(option.name);
       return (
-        <option value={option.value} key={index}>{option.name}</option>
+        <option value={option.value} disabled={isDisabled(option.name)} key={index}>{option.name}</option>
       );
-    });
+    }.bind(this));
 
     return (
       <div className="form-group">

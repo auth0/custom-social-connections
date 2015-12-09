@@ -39,13 +39,13 @@ var Try = React.createClass({
     var clientIds      = this.state.clientIds;
 
     clients.forEach(function (client) {
-      if (clientIds.indexOf(client.client_id) >= 0) {
+      if (clientIds.indexOf(client.client_id) >= 0 || client.name === 'All Applications') {
         enabledClients.push({name: client.name, value: client.client_id});
       }
     }.bind(this));
 
     this.setState({
-      enabledClients: enabledClients
+      enabledClients: enabledClients.sort(function (a,b) {return a.name !== 'All Applications';})
     });
   },
 
@@ -79,7 +79,7 @@ var Try = React.createClass({
                 <FormSelectGroup
                     title="Application"
                     options={this.state.enabledClients}
-                    defaultValue={this.state.clientIds.slice(0,1).shift()}
+                    optionsDisableRule={function (el) {return el !== 'All Applications';}}
                     ref="application"/>
               </div>
 

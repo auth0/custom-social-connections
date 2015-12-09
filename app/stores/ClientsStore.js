@@ -11,7 +11,7 @@ var ClientStore = assign({}, EventEmitter.prototype, {
   getAll: function() {
     client.getAll()
       .then(function (clients) {
-        this.emit(CHANGE_EVENT, clients.filter(function (client) { return client.name !== 'All Applications'; }));
+        this.emit(CHANGE_EVENT, clients);
       }.bind(this));
   },
 

@@ -99,7 +99,7 @@ var Applications = React.createClass({
 
   _onClientsChange: function (clients) {
     this.setState({
-      clients: clients
+      clients: clients.filter(function (client) { return client.name !== 'All Applications'; })
     });
 
     if (typeof this.props.defaultValue === 'undefined') {
