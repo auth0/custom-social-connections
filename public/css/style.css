@@ -9,24 +9,26 @@
   text-transform: capitalize;
 }
 
+.CodeMirror-gutter-wrapper {
+  position: absolute;
+}
+
 div.CodeMirror {
-  height: 125px;
+  height: 250px;
   overflow-y: auto;
   font-size: 13px;
-  /*border: 1px solid #ccc;*/
-  /*border-radius: 4px;*/
-
   background-color: rgba(155, 155, 155, 0.05);
   border-color: transparent;
-  border-radius: 3px;
   box-shadow: none;
-  /*height: 46px;*/
-  padding: 12px;
 }
 
 div.main-loading-container {
   position: relative;
   height: 20px;
+}
+
+.form-group {
+   margin-bottom: 0;
 }
 
 .form-control {
@@ -45,6 +47,8 @@ div.main-loading-container {
 
 .help-block {
   font-size: 14px;
+  padding-left: 12px;
+  padding-top: 2px;
 }
 
 @media (min-width: 768px)
@@ -69,5 +73,15 @@ div.main-loading-container {
   line-height: 35px;
   color: #000;
   font-size: 12px;
+}
+
+.modal-lg {
+  max-width: 900px !important;
+}
+
+@media (min-width: 992px) {
+  .modal-lg {
+    width: 900px !important;
+  }
 }
 

@@ -23,15 +23,20 @@ var FormTextAreaGroup = React.createClass({
   },
   render: function () {
     var options = {
-      mode:    'javascript',
-      tabSize: 2
+      mode:        'javascript',
+      tabSize:     2,
+      lineNumbers: true
     };
 
     return (
       <div className="form-group">
-        <label className="control-label col-xs-3">{this.props.title}</label>
-        <div className="controls col-xs-9">
-          <Codemirror value={this.state.value} onChange={this._onChanged} options={options} className="form-control"/>
+        <div className="row">
+          <label className="control-label col-xs-12">{this.props.title}</label>
+        </div>
+        <div className="row">
+          <div className="col-xs-12">
+            <Codemirror value={this.state.value} onChange={this._onChanged} options={options} className="form-control"/>
+          </div>
         </div>
       </div>
     );

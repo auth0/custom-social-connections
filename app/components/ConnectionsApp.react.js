@@ -13,7 +13,7 @@ var ConnectionsApp = React.createClass({
       <div className="col-xs-10 wrapper">
         <section id="connections-social" data-route="/connections/custom" data-title="Custom Connections " className="content-page current">
           <div className="content-header">
-            <h1>Custom Connections</h1>
+            <h1>Custom OAuth2 Connections</h1>
             <CreateButton onClick={this._showModal}/>
             <p className="explanation">
               <i className="icon-info-sign"></i>

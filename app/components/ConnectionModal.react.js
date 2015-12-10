@@ -86,7 +86,7 @@ var ConnectionModal = React.createClass({
         aria-hidden="false"
         style={{overflowY: 'auto', display: 'block'}}>
         <div className="modal-backdrop in"></div>
-        <div className="modal-dialog">
+        <div className="modal-dialog modal-lg">
           <div className="modal-content" id="new-connection-tab-content">
             <div className="modal-header">
               <button onClick={this._close} type="button" className="close"><span aria-hidden="true">×</span><span className="sr-only">Close</span></button>
@@ -101,7 +101,7 @@ var ConnectionModal = React.createClass({
             </div>
             <div className="tab-content">
                 <div id="connection-settings" className={classNames({'tab-pane': true, 'active': this.state.showSettings})}>
-                  <form className="connection-form form-horizontal" onSubmit={this._saveConnection}>
+                  <form className="connection-form form" onSubmit={this._saveConnection}>
                     <div id="connectionForm"></div>
                     <div className="modal-footer text-center">
                       <button disabled={this.state.saving} type="submit" className="btn btn-primary save">
