@@ -19,7 +19,7 @@ var OperationsMixin = {
 
         this.state.connectionForm.setState({
           mode:         '_update',
-          defaultValue: connection,
+          defaultValue: connection
         });
 
         this.state.applicationsForm.setState({
