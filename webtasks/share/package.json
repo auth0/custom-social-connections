@@ -1,15 +1,18 @@
 {
-  "name": "sync-task",
+  "name": "share-task",
   "version": "0.0.1",
   "description": "",
-  "main": "sync.js",
+  "main": "share.js",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha share.test.js"
   },
   "author": "javier.centurion@auth0.com",
   "license": "MIT",
   "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.3",
+    "mock-require": "^1.2.0",
     "gulp-webtask": "0.0.2"
   }
 }
