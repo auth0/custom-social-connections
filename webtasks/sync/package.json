@@ -1,0 +1,14 @@
+{
+  "name": "sync",
+  "version": "0.0.1",
+  "description": "",
+  "main": "sync.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "javier.centurion@auth0.com",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp-webtask": "0.0.2"
+  }
+}

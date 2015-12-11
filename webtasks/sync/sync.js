@@ -7,15 +7,16 @@ module.exports = function(context, req, res) {
     s3:     {
       accessKey: context.data.S3_ACCESS_KEY,
       secret:    context.data.S3_SECRET,
-      bucket:    'assets.us.auth0.com/extensions/recipes',
-      region:    'us-west-1'
+      bucket:    context.data.S3_BUCKET,
+      region:    context.data.S3_REGION
     },
     github: {
-      user: 'jcenturion',
-      repo: 'hawkeye-recipes',
-      path: 'recipes'
+      user: context.data.user,
+      repo: context.data.repo,
+      path: context.data.path
     }
   };
+
   var s3     = Promise.promisifyAll(new aws.S3({
     accessKeyId:     config.s3.accessKey,
     secretAccessKey: config.s3.secret,
@@ -99,7 +100,6 @@ module.exports = function(context, req, res) {
 
             return Promise.all(tasks);
           }).then(function () {
-            // cb(null, {status: 'success'});
             res.writeHead(200);
             res.end(JSON.stringify({status: 'success'}));
           }).catch(function (e) {
