@@ -18,7 +18,7 @@ var ConnectionModal = React.createClass({
     return {
       showSettings:   true,
       showApps:       false,
-      showTry:        false,
+      showTry:        this.props.mode === '_update' ? true : false,
       connection:     this.props.connection || {strategy:'oauth2', options: {scripts: {
         fetchUserProfile: [
                           'function(accessToken, ctx, cb) {',
@@ -40,11 +40,9 @@ var ConnectionModal = React.createClass({
   },
 
   componentDidMount: function () {
-    // TODO: Use refs
     this.setState({
       connectionForm:   React.render(<ConnectionForm onShare={this._share} defaultValue={this.state.connection} mode={this.state.mode}/>, document.getElementById('connectionForm')),
       applicationsForm: React.render(<Applications mode={this.state.mode} defaultValue={this.state.connection.enabled_clients}/>, document.getElementById('applicationsForm')),
-      tryFrom:          React.render(<Try mode={this.state.mode} connection={this.state.connection} clientIds={this.state.connection.enabled_clients}/>, document.getElementById('tryForm'))
     });
   },
 
@@ -55,8 +53,7 @@ var ConnectionModal = React.createClass({
   _showMe: function (active) {
     var tabs = {
       showSettings: false,
-      showApps:     false,
-      showTry:      false
+      showApps:     false
     };
 
     tabs[active] = true;
@@ -72,6 +69,17 @@ var ConnectionModal = React.createClass({
   _saveConnection: function (e) {
     e.preventDefault();
     this._save(this.state.connectionForm);
+  },
+
+  _generateTryItUrl: function () {
+    return [
+      window.env.userUrl + '?',
+      'response_type=code',
+      '&scope=openid%20profile',
+      '&client_id=' + window.env.masterClientId,
+      '&connection=' + this.state.connection.name,
+      '&redirect_uri=https://manage.auth0.com/tester/callback?connection=' + this.state.connection.name
+    ].join('');
   },
 
   render: function () {
@@ -96,7 +104,6 @@ var ConnectionModal = React.createClass({
               <ul className="nav nav-tabs">
                 <li className={classNames({'active': this.state.showSettings})}><a href="#" onClick={this._showMe.bind(this, 'showSettings')}>Settings</a></li>
                 <li className={classNames({'active': this.state.showApps})}><a href="#"     onClick={this._showMe.bind(this, 'showApps')}>Apps</a></li>
-                <li className={classNames({'active': this.state.showTry})}><a href="#"      onClick={this._showMe.bind(this, 'showTry')}>Try</a></li>
               </ul>
             </div>
             <div className="tab-content">
@@ -126,6 +133,14 @@ var ConnectionModal = React.createClass({
                         <span className="text">View PR</span>
                       </button>
 
+                      <a href={this._generateTryItUrl()} target="_blank" className={classNames({
+                        'btn': true,
+                        'btn-success': true,
+                        'hide': !this.state.showTry
+                      })}>
+                        <span className="text">Try</span>
+                      </a>
+
                       <button disabled={this.state.deleting} href="#" className={classNames({
                         'btn': true,
                         'btn-danger': true,
@@ -150,10 +165,6 @@ var ConnectionModal = React.createClass({
                       </div>
                     </fieldset>
                   </form>
-                </div>
-
-                <div id="try" className={classNames({'tab-pane': true, 'active': this.state.showTry})}>
-                  <div id="tryForm"></div>
                 </div>
             </div>
           </div>

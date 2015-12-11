@@ -10,6 +10,8 @@ var OperationsMixin = {
           mode:       '_update',
           title:      connection.name,
           showShare:  isShared ? false : true,
+          showDelete: true,
+          showTry:    true,
           saving:     false
         });
 
@@ -25,17 +27,6 @@ var OperationsMixin = {
         this.state.applicationsForm.setState({
           mode:         '_update'
         });
-
-        this.state.tryFrom.setState({
-          mode:         '_update',
-          clientIds:    connection.enabled_clients,
-          connection:   connection
-        });
-
-        this.state.tryFrom.refs.application.setState({
-          value: connection.enabled_clients.slice(0,1).shift()
-        });
-
       }.bind(this));
   },
 
