@@ -56,12 +56,15 @@ var Switchboard = React.createClass({
       connections.forEach(function (connection) {
         var flag = true;
 
+        connection.isConfigured = true;
+
         for (var i = 0; i < source.length; i++) {
           if (source[i].name === connection.name) {
-            source[i]            = connection;
-            source[i].isTemplate = false;
-            source[i].isShared   = true;
-            flag                 = false;
+            source[i]              = connection;
+            source[i].isTemplate   = true;
+            source[i].isShared     = true;
+            source[i].isConfigured = true;
+            flag                   = false;
             break;
           }
         }

@@ -12,18 +12,6 @@ var Board = React.createClass({
     // TODO: Extract to Mixin
     return typeof this.props.connection.enabled_clients !== 'undefined' && this.props.connection.enabled_clients.length > 0;
   },
-  generateTryItUrl: function () {
-    // TODO: Extract to Mixin
-    return [
-      window.env.userUrl + '?',
-      'response_type=code',
-      '&scope=openid%20profile',
-      '&client_id=' + window.env.masterClientId,
-      '&prompt=consent',
-      '&connection=' + this.props.connection.name,
-      '&redirect_uri=https://manage.auth0.com/tester/callback?connection=' + this.props.connection.name
-    ].join('');
-  },
   render: function () {
     return (
       <div className={classNames({
@@ -34,11 +22,6 @@ var Board = React.createClass({
         tabIndex="-1">
         <div className="provider-name" onClick={this._onClick}>
           {this.props.connection.name}
-        </div>
-        <div className="switch-indicators">
-          <a href={this.generateTryItUrl()} target="_blank" className="test indicator" title="Try Connection">
-           <span className="text">Try</span> <span className="play-icon icon-budicon-461"></span>
-          </a>
         </div>
         <div className="switch-title hide" style={{display: 'block'}}>
           {this.props.connection.name}

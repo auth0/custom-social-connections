@@ -7,6 +7,8 @@ var client        = require('../apiClient').connections;
 
 var CHANGE_EVENT     = 'change';
 
+var ClientsStore = require('./ClientsStore');
+
 var ConnectionsStore = assign({}, EventEmitter.prototype, {
   getAll: function() {
     client.getAll()
@@ -19,12 +21,21 @@ var ConnectionsStore = assign({}, EventEmitter.prototype, {
     return client.create(connection)
       .then(function (connection) {
         this.getAll();
+        ClientsStore.getAll();
         return connection;
       }.bind(this));
   },
 
   update: function (id, connection) {
     return client.update(id, connection)
+      .then(function (connection) {
+        this.getAll();
+        return connection;
+      }.bind(this));
+  },
+
+  remove: function (id, connection) {
+    return client.remove(id)
       .then(function (connection) {
         this.getAll();
         return connection;

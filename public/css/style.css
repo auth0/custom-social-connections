@@ -9,21 +9,79 @@
   text-transform: capitalize;
 }
 
-.confetti-ball {
-  height: 1.5em;
-  width: 1.5em;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  display: inline-block;
-  vertical-align: middle;
-  background-image:url("confetti_ball.png")
+.CodeMirror-gutter-wrapper {
+  position: absolute;
 }
 
 div.CodeMirror {
-  height: 125px;
+  height: 250px;
   overflow-y: auto;
   font-size: 13px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  background-color: rgba(155, 155, 155, 0.05);
+  border-color: transparent;
+  box-shadow: none;
 }
+
+div.main-loading-container {
+  position: relative;
+  height: 20px;
+}
+
+.form-group {
+   margin-bottom: 0;
+}
+
+.form-control {
+  background-color: rgba(155, 155, 155, 0.05);
+  border-color: transparent;
+  border-radius: 3px;
+  box-shadow: none;
+  height: 46px;
+  padding: 12px;
+}
+
+.form-control:focus {
+  border-color: #00ADB5;
+  box-shadow: none;
+}
+
+.help-block {
+  font-size: 14px;
+  padding-left: 12px;
+  padding-top: 2px;
+}
+
+@media (min-width: 768px)
+.control-label {
+  line-height: 46px;
+  padding-top: 0 !important;
+}
+
+@media (min-width: 768px)
+.form-horizontal .control-label {
+  padding-top: 7px;
+  margin-bottom: 0;
+  text-align: right;
+}
+
+@media (min-width: 768px)
+.form-group .col-left {
+  padding-right: 7.5px;
+}
+
+.control-label {
+  line-height: 35px;
+  color: #000;
+  font-size: 12px;
+}
+
+.modal-lg {
+  max-width: 900px !important;
+}
+
+@media (min-width: 992px) {
+  .modal-lg {
+    width: 900px !important;
+  }
+}
+

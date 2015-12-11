@@ -85,7 +85,7 @@ module.exports = {
       return request('connections/' + id, 'PATCH', data);
     },
 
-    remove: function del(remove) {
+    remove: function del(id) {
       return request('connections/' + id, 'DELETE');
     }
   }

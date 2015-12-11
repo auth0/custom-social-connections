@@ -32,12 +32,15 @@
 
   try {
     decoded             = jwt_decode(token);
+    // TODO: Rollback when API is fixed
+    // context.env.apiUrl  = decoded.aud[0];
+    // context.env.userUrl = decoded.aud[0].replace('/api/v2', '/authorize');
     context.env.apiUrl  = decoded.aud;
     context.env.userUrl = decoded.aud.replace('/api/v2', '/authorize');
     context.env.token   = token;
 
     var options = {
-      url:         decoded.aud + 'clients',
+      url:         'https://auth0.auth0.com/userinfo',
       type:        'GET',
       contentType: 'application/json',
       headers:     {
@@ -45,23 +48,17 @@
       }
     };
 
-    $.ajax(options)
-      .then(function (clients) {
-        var userId = clients.pop().owners.pop();
+    // TODO: Rollback when API is fixed
+    // $.ajax(options)
+    //   .then(function (userInfo) {
+    //     context.env.user = {
+    //       nickname: userInfo.name, // userInfo.nickname
+    //       email:    userInfo.name
+    //     };
 
-        options.url = decoded.aud + 'users/' + userId;
-
-        $.ajax(options)
-          .then(function (user) {
-            context.env.user = {
-              nickname: user.nickname,
-              email:    user.email
-            };
-
-            $('#user-picture').attr('src', user.picture);
-            $('#username').text(user.name);
-          });
-      });
+    //     // $('#user-picture').attr('src', user.picture);
+    //     $('#username').text(userInfo.name);
+    //   });
   } catch (err) {
     // Invalid token
     authenticate();

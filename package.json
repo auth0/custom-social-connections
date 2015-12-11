@@ -15,7 +15,7 @@
     "connections",
     "oauth2"
   ],
-  "author": "centurion.javier@gmail.com",
+  "author": "javier.centurion@auth0.com",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jcenturion/dashboard/issues"
@@ -34,7 +34,6 @@
   },
   "devDependencies": {
     "browserify": "~6.2.0",
-    "chai": "^3.4.1",
     "envify": "~3.0.0",
     "gulp": "~3.9.0",
     "gulp-connect": "~2.2.0",
@@ -44,8 +43,6 @@
     "jest-cli": "~0.4.3",
     "jshint-jsx": "~0.4.1",
     "jshint-stylish": "~2.0.1",
-    "mocha": "^2.3.3",
-    "mock-require": "^1.2.0",
     "reactify": "~0.15.2",
     "uglify-js": "~2.4.15",
     "watchify": "~2.1.1"

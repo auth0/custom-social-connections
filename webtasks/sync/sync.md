@@ -4,7 +4,7 @@ This webtask was design to be used as a [Github Webhook](https://developer.githu
 
 ## Prerequisites
 
-To deploy **Share Webtask**, you'll need the following:
+To deploy **Sync Webtask**, you'll need the following:
 
 * [Node JS](http://nodejs.org/)
 * [NPM](https://npmjs.org/)

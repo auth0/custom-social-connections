@@ -13,7 +13,7 @@ var ConnectionsApp = React.createClass({
       <div className="col-xs-10 wrapper">
         <section id="connections-social" data-route="/connections/custom" data-title="Custom Connections " className="content-page current">
           <div className="content-header">
-            <h1>Custom Connections</h1>
+            <h1>Custom OAuth2 Connections</h1>
             <CreateButton onClick={this._showModal}/>
             <p className="explanation">
               <i className="icon-info-sign"></i>
@@ -21,7 +21,19 @@ var ConnectionsApp = React.createClass({
             </p>
             <div className="alert alert-info">
               <strong>Share?</strong>
-              <span>&nbsp;You own custom connections. The Auth0 community will be happy if you share them.&nbsp;</span><a href="#">Click here</a><span>&nbsp;to share your connections.</span>
+              <span>&nbsp;You own custom connections. The Auth0 community will be happy if you share them.</span>
+            </div>
+          </div>
+          <div className="main-loading-container">
+            <div className="spin-container loading-spin  ">
+              <div className="spinner-css small">
+                <span className="side sp_left">
+                  <span className="fill"></span>
+                </span>
+                <span className="side sp_right">
+                  <span className="fill"></span>
+                </span>
+              </div>
             </div>
           </div>
           <Switchboard onChange={this._onChange} onClick={this._onClick}/>
@@ -39,8 +51,8 @@ var ConnectionsApp = React.createClass({
   },
 
   _renderConnectionModal: function (connection) {
-    var mode  = connection.isTemplate ? 'create': 'edit';
-    var title = connection.isTemplate ? null: connection.name;
+    var mode  = connection.isConfigured ? '_update' : '_create';
+    var title = connection.isConfigured ? connection.name : null;
 
     React.render(<ConnectionModal title={title} connection={connection} mode={mode}/>, document.getElementById('connectionModal'));
   },

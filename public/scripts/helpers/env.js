@@ -2,10 +2,18 @@
   'use strict';
 
   context.env = {
+    // // Development
+    // clientId:    'sOZFZyH5MXSRH3uqmjjHf5eT7GYWAjIx',
+    // authUrl:     'https://auth0.dev.auth0.com/i/oauth2/authorize',
+    // // Production
     clientId:    'N3PAwyqXomhNu6IWivtsa3drBfFjmWJL',
     authUrl:     'https://auth0.auth0.com/i/oauth2/authorize',
+    // // Local
+    // clientId:    'FWLFKcKaDoviOAGwD8kHBKQyJvQ9DgbH',
+    // authUrl:     'https://login0.myauth0.com/i/oauth2/authorize',
     callbackUrl: 'http://localhost:3000/callback.html',
-    scopes:      'read:connections create:connections update:connections delete:connections read:clients read:users',
+    // TODO: Rollback when API is fixed
+    scopes:      'read:connections create:connections update:connections delete:connections read:clients read:users', //openid profile
     s3:          {
       accessKey: '',
       secret:    '',
