@@ -6,6 +6,7 @@ gulp.task('deploy', function () {
     .pipe(wt.create({
       token:   process.env.WEBTASK_TOKEN,
       name:    'sync',
+      parse:   true,
       secrets: {
         S3_ACCESS_KEY: process.env.S3_ACCESS_KEY,
         S3_SECRET:     process.env.S3_SECRET,

@@ -27,30 +27,12 @@ module.exports = function(context, req, res) {
   }));
 
   if (req.method === 'GET') {
-    s3.listObjectsAsync({Bucket: 'assets.us.auth0.com', Prefix: 'extensions/recipes'})
+    s3.getObjectAsync({Bucket: 'assets.us.auth0.com', Key: 'extensions/recipes/recipes.json'})
       .then(function (data) {
-        var promises = [];
-
-        data.Contents.forEach(function (file) {
-          var key = file.Key;
-          if (key.indexOf('.json') >= 0 ) {
-            promises.push(s3.getObjectAsync({Bucket: 'assets.us.auth0.com', Key: key}));
-          }
-        });
-
-        Promise.all(promises)
-          .map(function (data) {
-            return data.Body.toString();
-          })
-          .map(function (data) {
-            return JSON.parse(data);
-          })
-          .then(function (results) {
-            res.writeHead(200);
-            res.end(JSON.stringify(results));
-          });
+        res.writeHead(200);
+        res.end(data.Body.toString());
       });
-  } else if (req.method === 'POST'){
+  } else if (req.method === 'POST') {
     // PR is closed and merged
     if (context.body.action === 'closed' && context.body.pull_request.merged) {
       var reposUrl = 'https://api.github.com/repos/'+config.github.user+'/'+config.github.repo+'/contents/'+config.github.path;
@@ -87,16 +69,18 @@ module.exports = function(context, req, res) {
           });
 
           Promise.all(promises).then(function (results) {
-            var tasks = [];
+            var tasks   = [];
+            var recipes = [];
 
             results.forEach(function (file) {
-              var fileName = JSON.parse(file).name + '.json';
-
-              tasks.push(s3.putObjectAsync({
-                Key:  fileName,
-                Body: file
-              }));
+              var parsed = JSON.parse(file);
+              recipes.push(parsed);
             });
+
+            tasks.push(s3.putObjectAsync({
+              Key:  'recipes.json',
+              Body: JSON.stringify(recipes)
+            }));
 
             return Promise.all(tasks);
           }).then(function () {
