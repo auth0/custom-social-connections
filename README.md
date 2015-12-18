@@ -1,4 +1,4 @@
-# Auth0 Custom OAuth2 Dashboard
+# Custom OAuth2 Dashboard
 
 This application gives [Auth0](https://auth0.com/) customers the possibility to manage custom OAuth2 connections in an easy way.
 The application provides:
@@ -10,8 +10,6 @@ The application provides:
 - Try a custom connection
 
 ![](https://raw.githubusercontent.com/auth0/custom-oauth2-dashboard/gh-pages/assets/img/1-Dashboard.png)
-
-Live demo at [http://auth0.github.io/custom-oauth2-dashboard](http://auth0.github.io/custom-oauth2-dashboard/).
 
 ## What is Auth0?
 
