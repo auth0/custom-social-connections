@@ -1,0 +1,10 @@
+{
+  "name": "Custom OAuth2 Dashbord",
+  "description": "This application gives Auth0 customers the possibility to manage custom OAuth2 connections in an easy way.",
+  "type": "application",
+  "keywords": [
+    "auth0",
+    "extension"
+  ],
+  "assets_baseurl": "YOUR-ASSETS-URL"
+}

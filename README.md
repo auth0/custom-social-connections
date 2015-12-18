@@ -44,12 +44,11 @@ To run it locally, you'll need the following:
 
 ### First Time Setup
 
-1. Install gulp globally - `npm install --global gulp`
 1. Install NPM packages - `npm install`
 
 ### Running the server
 
-    $ gulp
+    $ npm start
     $ open http://localhost:3000
 
 ## Author

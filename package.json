@@ -1,62 +1,38 @@
 {
-  "name": "hawkeye",
+  "name": "custom-oauth2-connections",
   "version": "0.0.1",
-  "description": "Hawkeye gives you the possibility to manage Auth0 custom OAuth2 connections",
+  "description": "This application gives Auth0 customers the possibility to manage custom OAuth2 connections in an easy way.",
+  "main": "index.js",
   "scripts": {
-    "start": "watchify -o public/scripts/bundle.js -v -d app/app.js",
-    "test": "jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jcenturion/dashboard.git"
+    "prestart": "rm -rf dist && mkdir -p dist/public/css && cp src/public/css/style.css dist/public/css/style.css",
+    "start": "webpack --config webpack.ui.config.js && webpack --config webpack.config.js",
+    "poststart": "node dist/bundle.js"
   },
   "keywords": [
     "auth0",
-    "connections",
+    "extension",
     "oauth2"
   ],
-  "author": "centurion.javier@gmail.com",
+  "author": "javier.centurion@auth0.com",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/jcenturion/dashboard/issues"
-  },
-  "homepage": "https://github.com/jcenturion/dashboard#readme",
   "dependencies": {
     "classnames": "~2.1.3",
     "codemirror": "^5.8.0",
+    "express": "^4.13.3",
     "flux": "~2.0.1",
-    "jquery": "~2.1.4",
     "js-beautify": "^1.5.10",
     "keymirror": "~0.1.0",
     "object-assign": "~1.0.0",
     "react": "~0.13.0",
-    "react-codemirror": "~0.1.7"
+    "react-codemirror": "~0.1.7",
+    "webtask-tools": "^1.1.0"
   },
   "devDependencies": {
-    "browserify": "~6.2.0",
-    "chai": "^3.4.1",
-    "envify": "~3.0.0",
-    "gulp": "~3.9.0",
-    "gulp-connect": "~2.2.0",
-    "gulp-exec": "~2.1.2",
-    "gulp-jshint": "~1.12.0",
-    "gulp-jsxcs": "~0.1.9",
-    "jest-cli": "~0.4.3",
-    "jshint-jsx": "~0.4.1",
-    "jshint-stylish": "~2.0.1",
-    "mocha": "^2.3.3",
-    "mock-require": "^1.2.0",
-    "reactify": "~0.15.2",
-    "uglify-js": "~2.4.15",
-    "watchify": "~2.1.1"
-  },
-  "browserify": {
-    "transform": [
-      "reactify",
-      "envify"
-    ]
-  },
-  "jest": {
-    "rootDir": "./app"
+    "jade": "^1.11.0",
+    "jade-loader": "^0.8.0",
+    "jsx-loader": "^0.13.2",
+    "react": "^0.14.3",
+    "string-replace-webpack-plugin": "0.0.3",
+    "webpack": "^1.12.9"
   }
 }
