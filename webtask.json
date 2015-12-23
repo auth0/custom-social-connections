@@ -6,5 +6,6 @@
     "auth0",
     "extension"
   ],
-  "assets_baseurl": "YOUR-ASSETS-URL"
+  "assets_baseurl": "YOUR-ASSETS-URL",
+  "main": "https://raw.githubusercontent.com/auth0/custom-oauth2-dashboard/master/dist/bundle.js"
 }
