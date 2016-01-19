@@ -10,7 +10,8 @@ app.use(auth0({
 
 app.get('/', function (req, res) {
   res.header("Content-Type", 'text/html');
-  res.status(200).send(template({
+  res.status(200)
+  .send(template({
     baseUrl: res.locals.baseUrl
   }));
 });
