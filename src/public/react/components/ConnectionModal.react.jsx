@@ -125,13 +125,13 @@ var ConnectionModal = React.createClass({
                         <span className={classNames({'hide': !this.state.sharing})}>Sharing ...</span>
                       </button>
 
-                      <button href={this.state.prLocation} target="_blank" className={classNames({
+                      <a href={this.state.prLocation} target="_blank" className={classNames({
                         'btn': true,
                         'btn-default': true,
                         'hide': !this.state.showPrLocation
                       })}>
                         <span className="text">View PR</span>
-                      </button>
+                      </a>
 
                       <a href={this._generateTryItUrl()} target="_blank" className={classNames({
                         'btn': true,

@@ -31,6 +31,8 @@ var OperationsMixin = {
   },
 
   _update: function (connection, id, context) {
+    delete connection.name;
+
     ConnectionsStore.update(id, connection)
       .then(function () {
         context.showSuccessMessage();
@@ -84,7 +86,7 @@ var OperationsMixin = {
       recipe:  connection.name,
       userInfo:    window.env.user,
       content: {
-        name:     connection.name,
+        name:     connection.name.toLowerCase(),
         strategy: 'oauth2',
         options: {
           authorizationURL: connection.options.authorizationURL,
