@@ -1,7 +1,7 @@
 {
-  "name": "custom-oauth2-connections",
+  "name": "custom-social-connections",
   "version": "0.0.1",
-  "description": "This application gives Auth0 customers the possibility to manage custom OAuth2 connections in an easy way.",
+  "description": "This application gives Auth0 customers the possibility to manage custom social connections in an easy way.",
   "main": "index.js",
   "scripts": {
     "prestart": "rm -rf dist && mkdir -p dist/public/css && cp src/public/css/style.css dist/public/css/style.css",

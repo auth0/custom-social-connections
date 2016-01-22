@@ -9,10 +9,10 @@ var ConnectionsStore = require('../stores/ConnectionsStore');
 var ConnectionsApp = React.createClass({
   render: function () {
     return (
-      <div className="col-xs-10 wrapper">
+      <div className="col-xs-12 wrapper">
         <section id="connections-social" data-route="/connections/custom" data-title="Custom Connections " className="content-page current">
           <div className="content-header">
-            <h1>Custom OAuth2 Connections</h1>
+            <h1>Custom Social Connections</h1>
             <CreateButton onClick={this._showModal}/>
             <p className="explanation">
               <i className="icon-info-sign"></i>

@@ -1,4 +1,4 @@
-# Custom Oauth2 Connections Sync
+# Custom Social Connections Sync
 
 ## How to deploy
 

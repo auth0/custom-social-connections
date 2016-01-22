@@ -4,5 +4,5 @@ var ConnectionsApp = require('./components/ConnectionsApp.react');
 
 React.render(
   <ConnectionsApp />,
-  document.getElementById('dashboard')
+  document.getElementById('content-area')
 );
