@@ -35,11 +35,17 @@ var ConnectionModal = React.createClass({
       prLocation:     '#',
       sharing:        false,
       saving:         false,
+      saved:          false,
+      updated:        false,
       deleting:       false,
     };
   },
 
   componentDidMount: function () {
+    if (this.props.dependency && this.props.dependency.checked === true) {
+      this.state.connection.enabled_clients = undefined;
+    }
+
     this.setState({
       connectionForm:   React.render(<ConnectionForm onShare={this._share} defaultValue={this.state.connection} mode={this.state.mode}/>, document.getElementById('connectionForm')),
       applicationsForm: React.render(<Applications mode={this.state.mode} defaultValue={this.state.connection.enabled_clients}/>, document.getElementById('applicationsForm')),
@@ -47,6 +53,10 @@ var ConnectionModal = React.createClass({
   },
 
   _close: function() {
+    if (this.props.dependency && !this.state.saved) {
+      this.props.dependency.checked = false;
+    }
+
     React.unmountComponentAtNode(document.getElementById('connectionModal'));
   },
 

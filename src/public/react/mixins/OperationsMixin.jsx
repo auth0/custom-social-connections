@@ -12,7 +12,8 @@ var OperationsMixin = {
           showShare:  isShared ? false : true,
           showDelete: true,
           showTry:    true,
-          saving:     false
+          saving:     false,
+          saved:      true
         });
 
         if (!isShared) {
@@ -44,7 +45,8 @@ var OperationsMixin = {
         }.bind(this), 5000);
 
         this.setState({
-          saving: false
+          saving: false,
+          saved:  true
         });
       }.bind(this));
   },

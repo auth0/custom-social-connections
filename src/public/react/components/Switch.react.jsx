@@ -7,7 +7,7 @@ var Switch = React.createClass({
   },
   _onChange: function (event) {
     event.stopPropagation();
-    this.props.onChange(event.target.checked, this.props.connection);
+    this.props.onChange(event.target, this.props.connection);
   },
   isActive: function () {
     // TODO: Extract to Mixin

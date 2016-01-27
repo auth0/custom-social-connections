@@ -45,24 +45,24 @@ var ConnectionsApp = React.createClass({
     React.render(<ConnectionModal/>, document.getElementById('connectionModal'));
   },
 
-  _renderConnectionModal: function (connection) {
+  _renderConnectionModal: function (connection, dependency) {
     var mode  = connection.isConfigured ? '_update' : '_create';
     var title = connection.isConfigured ? connection.name : null;
 
-    React.render(<ConnectionModal title={title} connection={connection} mode={mode}/>, document.getElementById('connectionModal'));
+    React.render(<ConnectionModal title={title} connection={connection} mode={mode} dependency={dependency}/>, document.getElementById('connectionModal'));
   },
 
   _onClick: function (connection) {
     this._renderConnectionModal(connection);
   },
 
-  _onChange: function (value, connection) {
-    if (value === true) {
-      this._renderConnectionModal(connection);
+  _onChange: function (target, connection) {
+    if (target.checked === true) {
+      this._renderConnectionModal(connection, target);
     }
 
     // Remove enabled connections
-    if (value === false) {
+    if (target.checked === false) {
       var conn =  {enabled_clients: []};
       var id   = connection.id;
 

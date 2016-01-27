@@ -35,7 +35,7 @@ var Board = React.createClass({
   },
   _onClick: function (e) {
     if (e.target.className !== 'uiswitch') {
-      this.props.onClick(this.props.connection,this.props.pepe);
+      this.props.onClick(this.props.connection);
     }
   }
 });
