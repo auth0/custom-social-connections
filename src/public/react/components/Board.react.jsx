@@ -19,8 +19,9 @@ var Board = React.createClass({
           'col-xs-4': true,
           disabled: !this.isActive()
         })}
+        onClick={this._onClick}
         tabIndex="-1">
-        <div className="provider-name" onClick={this._onClick}>
+        <div className="provider-name">
           {this.props.connection.name}
         </div>
         <div className="switch-title hide" style={{display: 'block'}}>
@@ -32,8 +33,10 @@ var Board = React.createClass({
       </div>
     );
   },
-  _onClick: function () {
-    this.props.onClick(this.props.connection);
+  _onClick: function (e) {
+    if (e.target.className !== 'uiswitch') {
+      this.props.onClick(this.props.connection,this.props.pepe);
+    }
   }
 });
 
