@@ -5,7 +5,8 @@ var app      = express();
 var template = require('./templates/index.jade');
 
 app.use(auth0({
-  scopes: 'read:connections create:connections update:connections delete:connections read:clients'
+  clientName: 'Custom Social Connections',
+  scopes:     'read:connections create:connections update:connections delete:connections read:clients'
 }));
 
 app.get('/', function (req, res) {
