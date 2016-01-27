@@ -1,5 +1,7 @@
 var React = require('react');
 
+var ConnectionsStore = require('../stores/ConnectionsStore');
+
 var Switch = React.createClass({
   propTypes: {
     connection: React.PropTypes.object.isRequired,
@@ -8,6 +10,12 @@ var Switch = React.createClass({
   _onChange: function (event) {
     event.stopPropagation();
     this.props.onChange(event.target, this.props.connection);
+  },
+  componentDidMount: function () {
+    ConnectionsStore.addChangeListener(this._onConnectionsChange);
+  },
+  componentWillUnmount: function () {
+    ConnectionsStore.removeChangeListener(this._onConnectionsChange);
   },
   isActive: function () {
     // TODO: Extract to Mixin
@@ -25,6 +33,10 @@ var Switch = React.createClass({
         <span className="switch-left"></span>
       </div>
     );
+  },
+
+  _onConnectionsChange: function (connections) {
+    $(this.getDOMNode()).find('.uiswitch').prop('checked', this.isActive());
   }
 });
 

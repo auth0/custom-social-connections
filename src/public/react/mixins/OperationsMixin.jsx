@@ -1,7 +1,7 @@
 var ConnectionsStore = require('../stores/ConnectionsStore');
 
 var OperationsMixin = {
-  _create: function (connection, isShared) {
+  _create: function (connection, isShared, context, isTemplate) {
     ConnectionsStore.create(connection)
       .then(function (connection) {
         this._showMe('showSettings');
@@ -10,7 +10,7 @@ var OperationsMixin = {
           mode:       '_update',
           title:      connection.name,
           showShare:  isShared ? false : true,
-          showDelete: true,
+          showDelete: isTemplate === true ? false : true,
           showTry:    true,
           saving:     false,
           saved:      true
@@ -55,14 +55,16 @@ var OperationsMixin = {
     var clients    = this.state.applicationsForm.getSelectedClients();
     var connection = this.state.connectionForm.getConnection();
     var param      = this.state.mode === '_create' ? connection.isShared : connection.id;
+    var isTemplate = connection.isTemplate;
 
     connection.enabled_clients = Object.keys(clients);
     delete connection.id;
     delete connection.isShared;
+    delete connection.isTemplate;
 
     this.setState({saving: true});
 
-    this[this.state.mode](connection, param, context);
+    this[this.state.mode](connection, param, context, isTemplate);
   },
 
   _delete: function () {
