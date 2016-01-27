@@ -18,10 +18,6 @@ var ConnectionsApp = React.createClass({
               <i className="icon-info-sign"></i>
               <span>Authenticate users with custom providers. You can control which permissions and attributes to request from each provider.</span>
             </p>
-            <div className="alert alert-info">
-              <strong>Share?</strong>
-              <span>&nbsp;You own custom connections. The Auth0 community will be happy if you share them.</span>
-            </div>
           </div>
           <div className="main-loading-container">
             <div className="spin-container loading-spin  ">
