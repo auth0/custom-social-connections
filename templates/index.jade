@@ -9,6 +9,17 @@ block content
       webtasks: {
         shareUrl:     'https://sandbox.it.auth0.com/api/run/auth0-extensions/custom-connections/share?webtask_no_cache=1',
         templatesUrl: 'https://sandbox.it.auth0.com/api/run/auth0-extensions/custom-connections/sync?webtask_no_cache=1'
-      }
+      },
+      userUrl: (function () {
+        var value = null;
+
+        try {
+          value = jwt_decode(window.sessionStorage.getItem('token')).aud[0].replace('/api/v2', '/authorize');
+        } catch (err) {
+          console.log('Token could not be decoded');
+        }
+
+        return value;
+      })()
     };
   script(src='@assets_baseurl/scripts/bundle.js')

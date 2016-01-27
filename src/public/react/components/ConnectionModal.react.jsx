@@ -18,7 +18,7 @@ var ConnectionModal = React.createClass({
     return {
       showSettings:   true,
       showApps:       false,
-      showTry:        this.props.mode === '_update' ? true : false,
+      showTry:        this.props.mode === '_update' ? (window.env.userUrl ? true : false) : false,
       connection:     this.props.connection || {strategy:'oauth2', options: {scripts: {
         fetchUserProfile: [
                           'function(accessToken, ctx, cb) {',
