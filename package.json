@@ -1,12 +1,12 @@
 {
   "name": "custom-social-connections",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "This application gives Auth0 customers the possibility to manage custom social connections in an easy way.",
   "main": "index.js",
   "scripts": {
-    "prestart": "rm -rf dist && mkdir -p dist/public/css && cp src/public/css/style.css dist/public/css/style.css",
+    "prestart": "rm -rf dist && mkdir -p dist/public && cp src/public/css/custom-social-connections.css dist/public/custom-social-connections.css",
     "start": "webpack --config webpack.ui.config.js && webpack --config webpack.config.js",
-    "poststart": "node dist/bundle.js"
+    "poststart": "node dist/custom-social-connections.js"
   },
   "keywords": [
     "auth0",

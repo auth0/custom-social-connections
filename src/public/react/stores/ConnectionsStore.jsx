@@ -4,15 +4,19 @@ var Constants     = require('../constants/Constants');
 var assign        = require('object-assign');
 var client        = require('../apiClient').connections;
 
-var CHANGE_EVENT     = 'change';
+var CHANGE_EVENT  = 'change';
+var ERROR_EVENT   = 'error';
 
-var ClientsStore = require('./ClientsStore');
+var ClientsStore  = require('./ClientsStore');
 
 var ConnectionsStore = assign({}, EventEmitter.prototype, {
   getAll: function() {
     client.getAll()
       .then(function (connections) {
         this.emit(CHANGE_EVENT, connections);
+      }.bind(this))
+      .fail(function () {
+        this.emit(ERROR_EVENT);
       }.bind(this));
   },
 
@@ -61,12 +65,27 @@ var ConnectionsStore = assign({}, EventEmitter.prototype, {
    */
   removeChangeListener: function(callback) {
     this.removeListener(CHANGE_EVENT, callback);
+  },
+
+  /**
+   * @param {function} callback
+   */
+  addErrorListener: function(callback) {
+    this.on(ERROR_EVENT, callback);
+  },
+
+  /**
+   * @param {function} callback
+   */
+  removeErrorListener: function(callback) {
+    this.removeListener(ERROR_EVENT, callback);
   }
 });
 
 AppDispatcher.register(function(action) {
   switch(action.actionType) {
     case Constants.CONNECTION_GET_ALL:
+      console.log('hola');
       ConnectionsStore.emitChange();
       break;
 
@@ -74,5 +93,7 @@ AppDispatcher.register(function(action) {
       // no op
   }
 });
+
+ConnectionsStore.setMaxListeners(20);
 
 module.exports = ConnectionsStore;

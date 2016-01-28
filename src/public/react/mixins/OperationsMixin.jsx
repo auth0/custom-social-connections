@@ -1,5 +1,24 @@
 var ConnectionsStore = require('../stores/ConnectionsStore');
 
+function errorHandling(xhr, text, error) {
+  var message = null;
+
+  this.setState({
+    saving:   false,
+    deleting: false,
+    sharing:  false
+  });
+
+  try {
+    message = JSON.parse(xhr.statusCode().responseText).message;
+  }
+  catch (err) {
+    console.log('Error reading error message', err);
+  }
+
+  this.state.connectionForm.showErrorMessage(message);
+}
+
 var OperationsMixin = {
   _create: function (connection, isShared, context, isTemplate) {
     ConnectionsStore.create(connection)
@@ -28,7 +47,8 @@ var OperationsMixin = {
         this.state.applicationsForm.setState({
           mode:         '_update'
         });
-      }.bind(this));
+      }.bind(this))
+      .fail(errorHandling.bind(this));
   },
 
   _update: function (connection, id, context) {
@@ -38,17 +58,12 @@ var OperationsMixin = {
       .then(function () {
         context.showSuccessMessage();
 
-        setTimeout(function () {
-          context.setState({
-            successMessage: {display: 'none'}
-          });
-        }.bind(this), 5000);
-
         this.setState({
           saving: false,
           saved:  true
         });
-      }.bind(this));
+      }.bind(this))
+      .fail(errorHandling.bind(this));
   },
 
   _save: function (context) {
@@ -78,7 +93,8 @@ var OperationsMixin = {
           deleting: false
         });
         this._close();
-      }.bind(this));
+      }.bind(this))
+      .fail(errorHandling.bind(this));
   },
 
   _share: function () {
@@ -108,7 +124,8 @@ var OperationsMixin = {
         prLocation:     data.link,
         sharing:        false
       });
-    }.bind(this));
+    }.bind(this))
+    .fail(errorHandling.bind(this));
   }
 };
 

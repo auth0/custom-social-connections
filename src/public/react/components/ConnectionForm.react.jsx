@@ -14,10 +14,12 @@ var ConnectionForm = React.createClass({
   },
   getInitialState: function () {
     return {
-      infoStyle:      {display: 'none'},
-      successMessage: {display: 'none'},
-      mode:           this.props.mode,
-      defaultValue:   this.props.defaultValue
+      infoStyle:        {display: 'none'},
+      successMessage:   {display: 'none'},
+      showErrorMessage: {display: 'none'},
+      errorMessage:     'Oops! There was an error. Try again later.',
+      mode:             this.props.mode,
+      defaultValue:     this.props.defaultValue
     };
   },
 
@@ -29,12 +31,37 @@ var ConnectionForm = React.createClass({
     this.setState({
       infoStyle: {}
     });
+
+    this._timer({
+      infoStyle: {display: 'none'}
+    });
   },
 
   showSuccessMessage: function () {
     this.setState({
       successMessage: {}
     });
+
+    this._timer({
+      successMessage: {display: 'none'}
+    });
+  },
+
+  showErrorMessage: function (message) {
+    this.setState({
+      showErrorMessage: {},
+      errorMessage:     message ? message : 'Oops! There was an error. Try again later.'
+    });
+
+    this._timer({
+      showErrorMessage: {display: 'none'}
+    });
+  },
+
+  _timer: function (state) {
+    setTimeout(function () {
+      this.setState(state);
+    }.bind(this), 5000);
   },
 
   _processBody: function () {
@@ -103,6 +130,12 @@ var ConnectionForm = React.createClass({
           <div className="info-area" style={this.state.successMessage}>
             <div className="alert alert-success" role="alert" style={{marginBottom: '0'}}>
               Connection settings saved successfully
+            </div>
+          </div>
+
+          <div className="info-area" style={this.state.showErrorMessage}>
+            <div className="alert alert-danger" role="alert" style={{marginBottom: '0'}}>
+              {this.state.errorMessage}
             </div>
           </div>
         </div>

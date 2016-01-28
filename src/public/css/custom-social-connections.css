@@ -1,3 +1,11 @@
+.switchboard {
+  margin-top: 35px;
+}
+
+.new-connection {
+  margin-top: 0!important;
+}
+
 .provider-name {
   position: relative;
   padding: 0;

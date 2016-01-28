@@ -3,7 +3,7 @@ var webpack = require('webpack');
 module.exports = {
   entry: './src/public/react/app',
   output: {
-    filename: './dist/public/scripts/bundle.js'
+    filename: './dist/public/'+require('./webtask.json').name+'.js'
   },
   module: {
     loaders: [{

@@ -4,13 +4,17 @@ var Constants     = require('../constants/Constants');
 var assign        = require('object-assign');
 var client        = require('../apiClient').templates;
 
-var CHANGE_EVENT = 'change';
+var CHANGE_EVENT  = 'change';
+var ERROR_EVENT   = 'error';
 
 var TemplatesStore = assign({}, EventEmitter.prototype, {
   getAll: function() {
     client.getAll()
       .then(function (templates) {
         this.emit(CHANGE_EVENT, JSON.parse(templates));
+      }.bind(this))
+      .fail(function () {
+        this.emit(ERROR_EVENT);
       }.bind(this));
   },
 
@@ -30,6 +34,20 @@ var TemplatesStore = assign({}, EventEmitter.prototype, {
    */
   removeChangeListener: function(callback) {
     this.removeListener(CHANGE_EVENT, callback);
+  },
+
+  /**
+   * @param {function} callback
+   */
+  addErrorListener: function(callback) {
+    this.on(ERROR_EVENT, callback);
+  },
+
+  /**
+   * @param {function} callback
+   */
+  removeErrorListener: function(callback) {
+    this.removeListener(ERROR_EVENT, callback);
   }
 });
 

@@ -5,12 +5,27 @@ var CreateButton    = require('./CreateButton.react');
 var ConnectionModal = require('./ConnectionModal.react');
 
 var ConnectionsStore = require('../stores/ConnectionsStore');
+var TemplatesStore   = require('../stores/TemplatesStore');
 
 var ConnectionsApp = React.createClass({
+  getInitialState: function () {
+    return {
+      showErrorMessage: {display: 'none'},
+      errorMessage:     'Oops! There was an error. Try again later.',
+    };
+  },
+  componentDidMount: function () {
+    TemplatesStore.addErrorListener(this._onError);
+    ConnectionsStore.addErrorListener(this._onError);
+  },
+  componentWillUnmount: function () {
+    TemplatesStore.addErrorListener(this._onError);
+    ConnectionsStore.addErrorListener(this._onError);
+  },
   render: function () {
     return (
       <div className="col-xs-12 wrapper">
-        <section id="connections-social" data-route="/connections/custom" data-title="Custom Connections " className="content-page current">
+        <section id="connections-social" className="content-page current">
           <div className="content-header">
             <h1>Custom Social Connections</h1>
             <CreateButton onClick={this._showModal}/>
@@ -19,6 +34,13 @@ var ConnectionsApp = React.createClass({
               <span>Authenticate users with custom providers. You can control which permissions and attributes to request from each provider.</span>
             </p>
           </div>
+          <div className="info-area" style={this.state.showErrorMessage}>
+            <div className="alert alert-danger" role="alert" style={{marginBottom: '0'}}>
+              {this.state.errorMessage}
+            </div>
+          </div>
+        </section>
+        <section>
           <div className="main-loading-container">
             <div className="spin-container loading-spin  ">
               <div className="spinner-css small">
@@ -68,6 +90,14 @@ var ConnectionsApp = React.createClass({
 
       ConnectionsStore.update(id, conn);
     }
+  },
+
+  _onError: function () {
+    this.setState({
+      showErrorMessage: {}
+    });
+
+    window.sessionStorage.removeItem('token');
   }
 });
 

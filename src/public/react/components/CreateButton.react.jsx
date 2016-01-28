@@ -6,7 +6,7 @@ var CreateButton = React.createClass({
   },
   render: function () {
     return (
-      <a href="#" id="add-db" className="btn btn-success pull-right create-db-connection" onClick={this._onClick} style={{cursor: 'pointer'}}>
+      <a href="#" id="add-db" className="btn btn-success pull-right new-connection" onClick={this._onClick} style={{cursor: 'pointer'}}>
         <i className="icon-budicon-473"></i>NEW CONNECTION
       </a>
     );

@@ -1,5 +1,6 @@
 var fs      = require('fs');
 var webpack = require('webpack');
+var pkg     = require('./webtask.json');
 
 var StringReplacePlugin = require("string-replace-webpack-plugin");
 
@@ -28,7 +29,7 @@ module.exports = {
   externals: readExternals(),
   output: {
     path: './dist',
-    filename: 'bundle.js'
+    filename: pkg.name+'.js'
   },
   module: {
     loaders: [
@@ -39,7 +40,13 @@ module.exports = {
             {
               pattern: /@assets_baseurl/ig,
               replacement: function (match, p1, offset, string) {
-                return process.env.assetsBaseurl || 'http://localhost:3000';
+                var location = 'http://localhost:3000';
+
+                if ((process.env.NODE_ENV || 'development') !== 'development') {
+                  location = 'https://cdn.auth0.com/extensions/' + pkg.name;
+                }
+
+                return location;
               }.bind(this)
             }
           ]
