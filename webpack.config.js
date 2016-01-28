@@ -43,10 +43,16 @@ module.exports = {
                 var location = 'http://localhost:3000';
 
                 if ((process.env.NODE_ENV || 'development') !== 'development') {
-                  location = 'https://cdn.auth0.com/extensions/' + pkg.name;
+                  location = 'https://cdn.auth0.com/extensions/' + pkg.name + '/assets';
                 }
 
                 return location;
+              }.bind(this)
+            },
+            {
+              pattern: /@extension_name/ig,
+              replacement: function (match, p1, offset, string) {
+                return pkg.name+'-'+pkg.version;
               }.bind(this)
             }
           ]
