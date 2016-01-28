@@ -5,11 +5,10 @@
   "author": "auth0",
   "description": "This application gives Auth0 customers the possibility to manage custom social connections in an easy way.",
   "type": "application",
-  "logoUrl": "https://cldup.com/y8wcljnEkh.png",
+  "logoUrl": "https://cdn.auth0.com/extensions/custom-social-connections/assets/logo.png",
   "keywords": [
     "auth0",
     "extension"
-  ],
-  "main": "https://cdn.auth0.com/extensions/custom-social-connections/wt.js"
+  ]
 }
 
