@@ -135,10 +135,10 @@ api.use('/share', function (req, res, next) {
   config.userInfo = context.body.userInfo;
 
   if (typeof config.userInfo === 'undefined' || config.userInfo === null) {
-    config.userInfo = { nickname: 'dashboard', email: 'auth0@support.com' };
+    config.userInfo = { nickname: 'anonymous', email: 'auth0@support.com' };
   }
 
-  config.userInfo.nickname = config.userInfo.nickname || 'dashboard';
+  config.userInfo.nickname = config.userInfo.nickname || 'anonymous';
   config.userInfo.email    = config.userInfo.email || 'auth0@support.com';
 
   var github = new Github({
