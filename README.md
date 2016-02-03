@@ -29,6 +29,15 @@ To run it locally, you'll need the following:
     $ npm start
     $ open http://localhost:3000
 
+## Hosting on Webtask.io
+
+To deploy this to your webtask sandbox, you'll need to run:
+
+    $ NODE_ENV=production npm run build
+    $ wt create dist/custom-social-connections.js --name custom-social-connections --no-parse --no-merge
+
+Note: Click [here](https://webtask.io/) for more information about how to setup webtasks.
+
 ## Issue Reporting
 
 If you have found a bug or if you have a feature request, please report them at this repository issues section. Please do not report security vulnerabilities on the public GitHub issue tracker. The [Responsible Disclosure Program](https://auth0.com/whitehat) details the procedure for disclosing security issues.
