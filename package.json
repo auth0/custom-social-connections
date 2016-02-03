@@ -16,7 +16,7 @@
   "author": "javier.centurion@auth0.com",
   "license": "MIT",
   "dependencies": {
-    "auth0-oauth2-express": "0.0.1",
+    "auth0-oauth2-express": "0.0.2",
     "classnames": "~2.1.3",
     "codemirror": "^5.8.0",
     "express": "^4.13.3",
