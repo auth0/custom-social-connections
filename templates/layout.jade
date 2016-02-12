@@ -25,11 +25,26 @@ html
     script(type='text/javascript', src='https://cdn.auth0.com/js/navbar-1.0.2.min.js')
 
     script(type='text/javascript').
+      function useragentChecks () {
+        var browser = navigator.userAgent.toLowerCase();
+
+        var firefox = (browser.indexOf('firefox') > -1);
+
+        if(firefox) {
+          $('body').addClass('is-ff');
+        }
+
+        var edge = (browser.indexOf('edge') > -1);
+        if (edge){
+          $('body').addClass('is-edge');
+        }
+      }
+
       if (!sessionStorage.getItem("token")) {
         window.location.href = '#{baseUrl}/login';
       }
 
-body.a0-extension
+body.a0-extension(onLoad="useragentChecks()")
   header.dashboard-header
     nav.navbar.navbar-default(role='navigation')
       .container
@@ -52,9 +67,9 @@ body.a0-extension
             .col-xs-12.content-header
               ol.breadcrumb
                 li
-                  a(href='https://manage.auth0.com/login') Auth0 Dashboard
+                  a(href='https://manage.auth0.com/', target="_blank") Auth0 Dashboard
                 li
-                  a(href='https://manage.auth0.com/extensions') Extensions
+                  a(href='https://manage.auth0.com/#/extensions', target="_blank") Extensions
 
        #content-area.tab-content
         block content
