@@ -4,22 +4,6 @@ var Webtask  = require('webtask-tools');
 var app      = express();
 var template = require('./templates/index.jade');
 
-////////////// DEVELOPMENT //////////////
-if ((process.env.NODE_ENV || 'development') === 'development') {
-  var token = require('crypto').randomBytes(32).toString('hex');
-
-  app.use(function (req, res, next) {
-    req.webtaskContext = {
-      data: {
-        TOKEN_SECRET: token // This will be automatically provisioned once the extensions is installed
-      }
-    };
-
-    next();
-  });
-}
-////////////// DEVELOPMENT //////////////
-
 app.use(auth0({
   clientName: 'Custom Social Connections',
   scopes:     'read:connections create:connections update:connections delete:connections read:clients'
