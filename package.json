@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run build && node dist/custom-social-connections.js",
     "webpack":"webpack --config webpack.ui.config.js && webpack --config webpack.config.js",
-    "clean": "npm install clean-css -g && rm -rf dist && mkdir -p dist/public && cleancss -o dist/public/custom-social-connections-1.0.5.min.css src/public/css/styles.css",
+    "clean": "npm install clean-css -g && rm -rf dist && mkdir -p dist/public && cleancss -o dist/public/custom-social-connections-1.0.6.min.css src/public/css/styles.css",
     "build": "npm run clean && npm run webpack"
   },
   "keywords": [
