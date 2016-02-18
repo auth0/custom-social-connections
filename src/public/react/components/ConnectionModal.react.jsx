@@ -126,23 +126,6 @@ var ConnectionModal = React.createClass({
                         <span className={classNames({'hide': !this.state.saving})}>Saving ...</span>
                       </button>
 
-                      <button disabled={this.state.sharing} href="#" className={classNames({
-                        'btn': true,
-                        'btn-default': true,
-                        'hide': !this.state.showShare
-                      })} onClick={this._share}>
-                        <span className={classNames({'hide': this.state.sharing})}>Share</span>
-                        <span className={classNames({'hide': !this.state.sharing})}>Sharing ...</span>
-                      </button>
-
-                      <a href={this.state.prLocation} target="_blank" className={classNames({
-                        'btn': true,
-                        'btn-default': true,
-                        'hide': !this.state.showPrLocation
-                      })}>
-                        <span className="text">View PR</span>
-                      </a>
-
                       <a href={this._generateTryItUrl()} target="_blank" className={classNames({
                         'btn': true,
                         'btn-success': true,
@@ -159,6 +142,23 @@ var ConnectionModal = React.createClass({
                         <span className={classNames({'hide': this.state.deleting})}>Delete</span>
                         <span className={classNames({'hide': !this.state.deleting})}>Deleting ...</span>
                       </button>
+
+                      <button disabled={this.state.sharing} href="#" className={classNames({
+                        'btn': true,
+                        'btn-default': true,
+                        'hide': !this.state.showShare
+                      })} onClick={this._share}>
+                        <span className={classNames({'hide': this.state.sharing})}>Share</span>
+                        <span className={classNames({'hide': !this.state.sharing})}>Sharing ...</span>
+                      </button>
+
+                      <a href={this.state.prLocation} target="_blank" className={classNames({
+                        'btn': true,
+                        'btn-default': true,
+                        'hide': !this.state.showPrLocation
+                      })}>
+                        <span className="text">View PR</span>
+                      </a>
                     </div>
                   </form>
                 </div>

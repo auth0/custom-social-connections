@@ -97,35 +97,39 @@ var OperationsMixin = {
       .fail(errorHandling.bind(this));
   },
 
-  _share: function () {
-    var connection = this.state.connectionForm.getConnection();
+  _share: function (e) {
+    e.preventDefault();
 
-    this.setState({sharing: true});
+    if (confirm('IMPORTANT: You are about to share the parameters of this integration with the rest of the world as a Pull Request in GitHub. Make sure there is no sensitive information in the Fetch User Profile script. Do you want to continue?')) {
+      var connection = this.state.connectionForm.getConnection();
 
-    ConnectionsStore.share({
-      recipe:  connection.name,
-      userInfo:    window.env.user,
-      content: {
-        name:     connection.name.toLowerCase(),
-        strategy: 'oauth2',
-        options: {
-          authorizationURL: connection.options.authorizationURL,
-          tokenURL:         connection.options.tokenURL,
-          scope:            connection.options.scope,
-          scripts:          {
-            fetchUserProfile: connection.options.scripts.fetchUserProfile
+      this.setState({sharing: true});
+
+      ConnectionsStore.share({
+        recipe:  connection.name,
+        userInfo:    window.env.user,
+        content: {
+          name:     connection.name.toLowerCase(),
+          strategy: 'oauth2',
+          options: {
+            authorizationURL: connection.options.authorizationURL,
+            tokenURL:         connection.options.tokenURL,
+            scope:            connection.options.scope,
+            scripts:          {
+              fetchUserProfile: connection.options.scripts.fetchUserProfile
+            }
           }
         }
-      }
-    }).then(function (data) {
-      this.setState({
-        showPrLocation: true,
-        showShare:      false,
-        prLocation:     data.link,
-        sharing:        false
-      });
-    }.bind(this))
-    .fail(errorHandling.bind(this));
+      }).then(function (data) {
+        this.setState({
+          showPrLocation: true,
+          showShare:      false,
+          prLocation:     data.link,
+          sharing:        false
+        });
+      }.bind(this))
+      .fail(errorHandling.bind(this));
+    }
   }
 };
 
