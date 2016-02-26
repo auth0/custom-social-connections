@@ -1,5 +1,7 @@
 # Custom Social Connections
 
+[![Auth0 Extensions](http://cdn.auth0.com/extensions/assets/badge.svg)](https://sandbox.it.auth0.com/api/run/auth0-extensions/extensions-badge?webtask_no_cache=1)
+
 This application gives [Auth0](https://auth0.com/) customers the possibility to manage custom social connections in an easy way.
 The application provides:
 
