@@ -1,4 +1,5 @@
 var ConnectionsStore = require('../stores/ConnectionsStore');
+var Metrics          = require('../metrics.jsx');
 
 function errorHandling(xhr, text, error) {
   var message = null;
@@ -24,6 +25,8 @@ var OperationsMixin = {
     ConnectionsStore.create(connection)
       .then(function (connection) {
         this._showMe('showSettings');
+
+        Metrics.track('create', connection.name.toLowerCase());
 
         this.setState({
           mode:       '_update',
@@ -58,6 +61,8 @@ var OperationsMixin = {
       .then(function () {
         context.showSuccessMessage();
 
+        Metrics.track('update', connection.name.toLowerCase());
+
         this.setState({
           saving: false,
           saved:  true
@@ -89,6 +94,9 @@ var OperationsMixin = {
 
     ConnectionsStore.remove(connection.id)
       .then(function () {
+
+        Metrics.track('delete', connection.id.toLowerCase());
+
         this.setState({
           deleting: false
         });
@@ -121,6 +129,8 @@ var OperationsMixin = {
           }
         }
       }).then(function (data) {
+        Metrics.track('delete', connection.name.toLowerCase());
+
         this.setState({
           showPrLocation: true,
           showShare:      false,

@@ -85,7 +85,6 @@ var ConnectionsStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(action) {
   switch(action.actionType) {
     case Constants.CONNECTION_GET_ALL:
-      console.log('hola');
       ConnectionsStore.emitChange();
       break;
 

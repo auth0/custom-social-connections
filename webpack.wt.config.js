@@ -25,7 +25,7 @@ module.exports = {
     __dirname:  false,
     __filename: true
   },
-  entry: './index',
+  entry: './webtask',
   externals: readExternals(),
   output: {
     path: './dist',
