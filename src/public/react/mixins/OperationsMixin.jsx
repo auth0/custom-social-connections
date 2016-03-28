@@ -129,7 +129,7 @@ var OperationsMixin = {
           }
         }
       }).then(function (data) {
-        Metrics.track('delete', connection.name.toLowerCase());
+        Metrics.track('share', connection.name.toLowerCase());
 
         this.setState({
           showPrLocation: true,
