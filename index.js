@@ -6,7 +6,10 @@ var template = require('./views/index.jade');
 
 app.use(auth0({
   clientName: 'Custom Social Connections',
-  scopes:     'read:connections create:connections update:connections delete:connections read:clients'
+  scopes:     'read:connections create:connections update:connections delete:connections read:clients',
+  audience:   function (req) {
+    return 'https://'+req.webtaskContext.data.AUTH0_DOMAIN+'/api/v2/';
+  }
 }));
 
 app.get('/', function (req, res) {
