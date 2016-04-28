@@ -66,11 +66,6 @@ module.exports = Request.get(LIST_MODULES_URL, { json: true }).then(function (da
     plugins: [
       new StringReplacePlugin(),
       new Webpack.optimize.DedupePlugin()
-      // new Webpack.optimize.UglifyJsPlugin({
-      //   compress: {
-      //     warnings: false
-      //   }
-      // })
     ],
     resolve: {
       modulesDirectories: ['node_modules'],
