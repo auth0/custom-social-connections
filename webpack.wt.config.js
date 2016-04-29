@@ -61,11 +61,16 @@ module.exports = Request.get(LIST_MODULES_URL, { json: true }).then(function (da
       'auth0-sandbox-ext': true,
       'detective': true,
       'sandboxjs': true,
-      'webtask-tools': false,
+      'webtask-tools': true,
     }),
     plugins: [
       new StringReplacePlugin(),
-      new Webpack.optimize.DedupePlugin()
+      new Webpack.optimize.DedupePlugin(),
+      new Webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
     ],
     resolve: {
       modulesDirectories: ['node_modules'],
