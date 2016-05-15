@@ -55,13 +55,14 @@ var OperationsMixin = {
   },
 
   _update: function (connection, id, context) {
+    var connectionName = connection.name.toLowerCase();
     delete connection.name;
 
     ConnectionsStore.update(id, connection)
       .then(function () {
         context.showSuccessMessage();
 
-        Metrics.track('update', connection.name.toLowerCase());
+        Metrics.track('update', connectionName);
 
         this.setState({
           saving: false,
