@@ -169,6 +169,12 @@ var ConnectionForm = React.createClass({
               helpText="Your provider client secret"
               defaultValue={this.state.defaultValue.options.client_secret}
               ref="options.client_secret"/>
+
+            <FormTextAreaGroup
+              title="Fetch User Profile Script"
+              defaultValue={this.state.defaultValue.options.scripts.fetchUserProfile}
+              ref="options.scripts.fetchUserProfile"
+              />
           </div>
           <div className="col-md-6">
             <FormTextGroup
@@ -191,14 +197,12 @@ var ConnectionForm = React.createClass({
               helpText="The scope parameters that you want to request consent for"
               defaultValue={this.state.defaultValue.options.scope}
               ref="options.scope"/>
-          </div>
-        </div>
 
-        <div className="authentication_area">
-          <FormTextAreaGroup
-            title="Fetch User Profile Script"
-            defaultValue={this.state.defaultValue.options.scripts.fetchUserProfile}
-            ref="options.scripts.fetchUserProfile"/>
+            <FormTextAreaGroup
+              title="Custom Headers"
+              defaultValue={this.state.defaultValue.options.customHeaders}
+              ref="options.customHeaders"/>
+          </div>
         </div>
       </div>
     );

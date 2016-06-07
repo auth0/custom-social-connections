@@ -1,13 +1,13 @@
 {
   "name": "custom-social-connections",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "This application gives Auth0 customers the possibility to manage custom social connections in an easy way.",
   "main": "index.js",
   "scripts": {
     "start": "npm run build-dev && node dist/custom-social-connections.js",
     "webpack": "webpack --config webpack.ui.config.js && webpack --config webpack.dev.config.js",
     "wt": "webpack --config webpack.ui.config.js && webpack --config webpack.wt.config.js",
-    "clean": "npm install clean-css -g && rm -rf dist && mkdir -p dist/public && cleancss -o dist/public/custom-social-connections-1.1.3.min.css src/public/css/styles.css",
+    "clean": "npm install clean-css -g && rm -rf dist && mkdir -p dist/public && cleancss -o dist/public/custom-social-connections-1.1.4.min.css src/public/css/styles.css",
     "build": "npm run clean && npm run wt",
     "build-dev": "npm run clean && npm run webpack"
   },
@@ -19,7 +19,7 @@
   "author": "javier.centurion@auth0.com",
   "license": "MIT",
   "dependencies": {
-    "auth0-oauth2-express": "1.1.7",
+    "auth0-oauth2-express": "1.1.8",
     "classnames": "~2.1.3",
     "codemirror": "^5.8.0",
     "express": "4.12.4",
