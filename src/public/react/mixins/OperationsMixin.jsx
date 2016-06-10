@@ -47,6 +47,10 @@ var OperationsMixin = {
       }
     }
 
+    if (connection.options.customHeaders) {
+      connection.options.customHeaders = JSON.parse(connection.options.customHeaders);
+    }
+
     ConnectionsStore.create(connection)
       .then(function (connection) {
         this._showMe('showSettings');
@@ -89,6 +93,10 @@ var OperationsMixin = {
       if (!isValidCustomHeaders(this, connection.options.customHeaders)) {
         return;
       }
+    }
+
+    if (connection.options.customHeaders) {
+      connection.options.customHeaders = JSON.parse(connection.options.customHeaders);
     }
 
     ConnectionsStore.update(id, connection)

@@ -200,7 +200,7 @@ var ConnectionForm = React.createClass({
 
             <FormTextAreaGroup
               title="Custom Headers"
-              defaultValue={this.state.defaultValue.options.customHeaders}
+              defaultValue={JSON.stringify(this.state.defaultValue.options.customHeaders)}
               ref="options.customHeaders"/>
           </div>
         </div>
