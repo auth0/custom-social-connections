@@ -22,7 +22,7 @@ html
     script(type='text/javascript', src='https://fb.me/react-dom-0.14.0.js')
     script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js')
     script(type='text/javascript', src='https://cdn.auth0.com/js/jwt-decode-1.4.0.min.js')
-    script(type='text/javascript', src='https://cdn.auth0.com/js/navbar-1.0.2.min.js')
+    script(type='text/javascript', src='https://cdn.auth0.com/js/navbar-1.0.4.min.js')
     script(type='text/javascript', src='https://cdn.auth0.com/js/m/metrics-1.4.js')
 
     script(type='text/javascript').
@@ -51,12 +51,12 @@ body.a0-extension(onLoad="useragentChecks()")
       .container
         .navbar-header
           h1.navbar-brand
-            a(href='http://manage.auth0.com/')
+            a(href='#{manageUrl}/')
               span Auth0
         #navbar-collapse.collapse.navbar-collapse
           script(type='text/babel').
             ReactDOM.render(
-              <Navbar baseUrl="#{baseUrl}"/>,
+              <Navbar baseUrl="#{baseUrl}" domain='#{rta}'/>,
               document.getElementById('navbar-collapse')
             );
 
@@ -68,9 +68,9 @@ body.a0-extension(onLoad="useragentChecks()")
             .col-xs-12.content-header
               ol.breadcrumb
                 li
-                  a(href='https://manage.auth0.com/', target="_blank") Auth0 Dashboard
+                  a(href='#{manageUrl}/', target="_blank") Auth0 Dashboard
                 li
-                  a(href='https://manage.auth0.com/#/extensions', target="_blank") Extensions
+                  a(href='#{manageUrl}/#/extensions', target="_blank") Extensions
 
        #content-area.tab-content
         block content

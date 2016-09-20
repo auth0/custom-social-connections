@@ -19,7 +19,9 @@ app.get('/', function (req, res) {
   res.header("Content-Type", 'text/html');
   res.status(200)
   .send(template({
-    baseUrl: res.locals.baseUrl
+    baseUrl: res.locals.baseUrl,
+    manageUrl: req.webtaskContext.data.AUTH0_MANAGE_URL,
+    rta: req.webtaskContext.data.AUTH0_RTA || 'https://auth0.auth0.com'
   }));
 });
 
