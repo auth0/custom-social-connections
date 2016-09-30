@@ -20,7 +20,7 @@ app.get('/', function (req, res) {
   res.status(200)
   .send(template({
     baseUrl: res.locals.baseUrl,
-    manageUrl: req.webtaskContext.data.AUTH0_MANAGE_URL,
+    manageUrl: req.webtaskContext.data.AUTH0_MANAGE_URL || 'http://manage.auth0.com',
     rta: req.webtaskContext.data.AUTH0_RTA || 'https://auth0.auth0.com'
   }));
 });
