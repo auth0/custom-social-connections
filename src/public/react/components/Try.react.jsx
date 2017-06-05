@@ -26,7 +26,7 @@ var Try = React.createClass({
       '&scope=openid%20profile',
       '&client_id=' + this.refs.application.getValue(),
       '&connection=' + this.state.connection.name,
-      '&redirect_uri=https://manage.auth0.com/tester/callback?connection=' + this.state.connection.name
+      '&redirect_uri=' + window.env.manageUrl + '/tester/callback?connection=' + this.state.connection.name
     ].join('');
   },
 
