@@ -118,7 +118,9 @@ var OperationsMixin = {
     var connection = this.state.connectionForm.getConnection();
     var param = this.state.mode === '_create' ? connection.isShared : connection.id;
     var isTemplate = connection.isTemplate;
+    var currentOptions = this.state.connection && this.state.connection.options || {};
 
+    connection.options = Object.assign({}, currentOptions, connection.options);
     connection.enabled_clients = Object.keys(clients);
     delete connection.id;
     delete connection.isShared;
