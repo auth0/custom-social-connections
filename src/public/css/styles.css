@@ -60,22 +60,25 @@ div.main-loading-container {
   padding-top: 2px;
 }
 
-@media (min-width: 768px)
-.control-label {
-  line-height: 46px;
-  padding-top: 0 !important;
+@media (min-width: 768px) {
+  .control-label {
+    line-height: 46px;
+    padding-top: 0 !important;
+  }
 }
 
-@media (min-width: 768px)
-.form-horizontal .control-label {
-  padding-top: 7px;
-  margin-bottom: 0;
-  text-align: right;
+@media (min-width: 768px) {
+  .form-horizontal .control-label {
+    padding-top: 7px;
+    margin-bottom: 0;
+    text-align: right;
+  }
 }
 
-@media (min-width: 768px)
-.form-group .col-left {
-  padding-right: 7.5px;
+@media (min-width: 768px) {
+  .form-group .col-left {
+    padding-right: 7.5px;
+  }
 }
 
 .control-label {
