@@ -4,7 +4,7 @@ var _       = require('lodash');
 var pkg     = require('./webtask.json');
 var StringReplacePlugin = require("string-replace-webpack-plugin");
 
-var LIST_MODULES_URL = 'https://webtask.it.auth0.com/api/run/wt-tehsis-gmail_com-1?key=eyJhbGciOiJIUzI1NiIsImtpZCI6IjIifQ.eyJqdGkiOiJmZGZiOWU2MjQ0YjQ0YWYyYjc2YzAwNGU1NjgwOGIxNCIsImlhdCI6MTQzMDMyNjc4MiwiY2EiOlsiZDQ3ZDNiMzRkMmI3NGEwZDljYzgwOTg3OGQ3MWQ4Y2QiXSwiZGQiOjAsInVybCI6Imh0dHA6Ly90ZWhzaXMuZ2l0aHViLmlvL3dlYnRhc2tpby1jYW5pcmVxdWlyZS90YXNrcy9saXN0X21vZHVsZXMuanMiLCJ0ZW4iOiIvXnd0LXRlaHNpcy1nbWFpbF9jb20tWzAtMV0kLyJ9.MJqAB9mgs57tQTWtRuZRj6NCbzXxZcXCASYGISk3Q6c';
+var LIST_MODULES_URL = 'https://auth0-extensions.us.webtask.io/list_modules?key=eyJhbGciOiJIUzI1NiIsImtpZCI6InVzLTMifQ.eyJqdGkiOiI2MmE2MmEzZTc2NDA0OGJjOWJjZjg4OTA0YTM2MTViNSIsImlhdCI6MTUwNDgwNDMxMSwiY2EiOltdLCJkZCI6MSwidGVuIjoiYXV0aDAtZXh0ZW5zaW9ucyJ9.f7oityW3pq30eDhOUCb218n8YllhV-6wBO1NYBKBGNI';
 
 module.exports = Request.get(LIST_MODULES_URL, { json: true }).then(function (data) {
   var modules = data.modules;
