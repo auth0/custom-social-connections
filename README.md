@@ -21,6 +21,7 @@ To run it locally, you'll need the following:
 
 * [Node JS](http://nodejs.org/)
 * [NPM](https://npmjs.org/)
+* [WT-Cli](https://webtask.io/)
 
 ### First Time Setup
 
@@ -28,7 +29,7 @@ To run it locally, you'll need the following:
 
 ### Running the server
 
-    $ npm start
+    $ npm start -- --param AUTH0_DOMAIN=auth0.auth0.com
     $ open http://localhost:3000
 
 ## Hosting on Webtask.io
