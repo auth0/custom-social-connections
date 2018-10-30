@@ -4,6 +4,8 @@ var Webtask  = require('webtask-tools');
 var app      = express();
 var template = require('./views/index.jade');
 
+app.use(express.static(__dirname + '/public'));
+
 app.use(function (req, res, next) {
   auth0({
     clientName: 'Custom Social Connections',
