@@ -3,7 +3,7 @@
 [![Auth0 Extensions](http://cdn.auth0.com/extensions/assets/badge.svg)](https://sandbox.it.auth0.com/api/run/auth0-extensions/extensions-badge?webtask_no_cache=1)
 
 This application gives [Auth0](https://auth0.com/) customers the possibility to manage custom social connections in an easy way.
-The application provides:
+The application allows the user to:
 
 - List custom connections
 - Create a new custom connection
@@ -39,7 +39,7 @@ To deploy this to your webtask sandbox, you'll need to run:
     $ NODE_ENV=production npm run build
     $ wt create dist/custom-social-connections.js --name custom-social-connections --no-parse --no-merge
 
-Note: Click [here](https://webtask.io/) for more information about how to setup webtasks.
+Note: Click [here](https://webtask.io/) for more information about how to set up webtasks.
 
 ## Issue Reporting
 
