@@ -3,6 +3,7 @@ var Switch     = require('./Switch.react');
 var classNames = require('classnames');
 
 var ConnectionForm = require('./ConnectionForm.react');
+var AuthParamsMap = require('./AuthParamsMap.react');
 var Applications   = require('./Applications.react');
 var Try            = require('./Try.react');
 
@@ -17,6 +18,7 @@ var ConnectionModal = React.createClass({
   getInitialState: function () {
     return {
       showSettings:   true,
+      showAuthParamsMap: false,
       showApps:       false,
       showTry:        this.props.mode === '_update' ? (window.env.userUrl ? true : false) : false,
       connection:     this.props.connection || {strategy:'oauth2', options: {scripts: {
@@ -48,6 +50,7 @@ var ConnectionModal = React.createClass({
 
     this.setState({
       connectionForm:   React.render(<ConnectionForm onShare={this._share} defaultValue={this.state.connection} mode={this.state.mode}/>, document.getElementById('connectionForm')),
+      authParamsMapForm:   React.render(<AuthParamsMap defaultValue={this.state.connection.options.authParamsMap} mode={this.state.mode}/>, document.getElementById('authParamsMapForm')),
       applicationsForm: React.render(<Applications mode={this.state.mode} defaultValue={this.state.connection.enabled_clients}/>, document.getElementById('applicationsForm')),
     });
   },
@@ -62,8 +65,9 @@ var ConnectionModal = React.createClass({
 
   _showMe: function (active) {
     var tabs = {
-      showSettings: false,
-      showApps:     false
+      showSettings:   false,
+      showAuthParamsMap: false,
+      showApps:       false
     };
 
     tabs[active] = true;
@@ -79,6 +83,11 @@ var ConnectionModal = React.createClass({
   _saveConnection: function (e) {
     e.preventDefault();
     this._save(this.state.connectionForm);
+  },
+
+  _saveAuthParamsMap: function (e) {
+    e.preventDefault();
+    this._save(this.state.authParamsMapForm);
   },
 
   _generateTryItUrl: function () {
@@ -112,7 +121,8 @@ var ConnectionModal = React.createClass({
             </div>
             <div className="form-wrapper">
               <ul className="nav nav-tabs">
-                <li className={classNames({'active': this.state.showSettings})}><a href="#" onClick={this._showMe.bind(this, 'showSettings')}>Settings</a></li>
+                <li className={classNames({ 'active': this.state.showSettings })}><a href="#" onClick={this._showMe.bind(this, 'showSettings')}>Settings</a></li>
+                <li className={classNames({ 'active': this.state.showAuthParamsMap })}><a href="#" onClick={this._showMe.bind(this, 'showAuthParamsMap')}>Auth Params Map</a></li>
                 <li className={classNames({'active': this.state.showApps})}><a href="#"     onClick={this._showMe.bind(this, 'showApps')}>Apps</a></li>
               </ul>
             </div>
@@ -159,6 +169,18 @@ var ConnectionModal = React.createClass({
                       })}>
                         <span className="text">View PR</span>
                       </a>
+                    </div>
+                  </form>
+                </div>
+
+                <div id="auth-params" className={classNames({ 'tab-pane': true, 'active': this.state.showAuthParamsMap })}>
+                  <form className="connection-form form" onSubmit={this._saveAuthParamsMap}>
+                    <div id="authParamsMapForm"></div>
+                    <div className="modal-footer text-center">
+                      <button disabled={this.state.saving} type="submit" className="btn btn-primary save">
+                        <span className={classNames({ 'hide': this.state.saving })}>Save</span>
+                        <span className={classNames({ 'hide': !this.state.saving })}>Saving ...</span>
+                      </button>
                     </div>
                   </form>
                 </div>
