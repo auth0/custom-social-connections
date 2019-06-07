@@ -66,8 +66,6 @@ var Applications = React.createClass({
                   <span className="switch-right switch-small"></span>
                 </div>
               </div>
-              <div className="switch-animate">
-              </div>
             </div>
           </div>
         </div>
