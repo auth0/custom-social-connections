@@ -1,6 +1,6 @@
 # Changelog
 
-[v1.2.1] (unreleased)
+[v1.2.1](https://github.com/auth0/custom-social-connections/releases/tag/v1.2.1) (2019-06-11)
 ------------------
 - Fixed App enable/disable sliders for Firefox [#19](https://github.com/auth0/custom-social-connections/issues/19)
 
