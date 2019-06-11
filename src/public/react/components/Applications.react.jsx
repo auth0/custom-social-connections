@@ -59,8 +59,12 @@ var Applications = React.createClass({
           <div className="col-xs-2 text-right">
             <div className="switch switch-small pull-right has-switch">
               <div className="switch-animate">
-                <input type="checkbox" defaultChecked={this.isChecked(client.client_id)} className="uiswitch" onChange={this._onChange} value={client.client_id}></input>
-                <span className="switch-right"></span>
+                <div className="switch-animate">
+                  <input type="checkbox" defaultChecked={this.isChecked(client.client_id)} className="uiswitch" onChange={this._onChange} value={client.client_id}></input>
+                  <span className="switch-left switch-small"></span>
+                  <label className="switch-small">&nbsp;</label>
+                  <span className="switch-right switch-small"></span>
+                </div>
               </div>
             </div>
           </div>
