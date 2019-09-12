@@ -85,7 +85,7 @@ var ConnectionModal = React.createClass({
     return [
       window.env.userUrl + '?',
       'response_type=code',
-      '&scope=openid%20profile',
+      '&scope=' + encodeURIComponent(this.state.connection.options.scope),
       '&client_id=' + window.env.masterClientId,
       '&connection=' + this.state.connection.name,
       '&redirect_uri=' + window.env.manageUrl + '/tester/callback?connection=' + this.state.connection.name
