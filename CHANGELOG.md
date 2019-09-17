@@ -1,5 +1,9 @@
 # Changelog
 
+[v1.2.2](https://github.com/auth0/custom-social-connections/releases/tag/v1.2.2) (2019-09-17)
+------------------
+- Fixed scope param of "try connection" url
+
 [v1.2.1](https://github.com/auth0/custom-social-connections/releases/tag/v1.2.1) (2019-06-11)
 ------------------
 - Fixed App enable/disable sliders for Firefox [#19](https://github.com/auth0/custom-social-connections/issues/19)
