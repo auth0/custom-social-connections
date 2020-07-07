@@ -1,5 +1,7 @@
 var context = window;
 
+var PER_PAGE = 100;
+
 function expireCookie() {
   document.cookie = 'token=; expires=-1';
   context.location.href = '/';
@@ -8,6 +10,22 @@ function expireCookie() {
 function readUserAPIUrl () {
   var token = context.sessionStorage.getItem('token');
   return jwt_decode(token).aud.slice(0,1).pop();
+}
+
+function requestAll(resource, filter, page, allResults) {
+  page = page || 0;
+  allResults = allResults || [];
+
+  var query = 'page=' + page + '&per_page=' + PER_PAGE + (filter ? '&' + filter : '');
+  return request(resource + '?' + query)
+    .then(results => {
+      allResults = allResults.concat(results || []);
+      if (results && results.length === PER_PAGE) {
+        return requestAll(resource, filter, page + 1, allResults);
+      } else {
+        return allResults;
+      }
+    });
 }
 
 function request(resource, method, body) {
@@ -33,7 +51,7 @@ function request(resource, method, body) {
   return $.ajax(options);
 }
 
-request('clients')
+requestAll('clients')
   .then(function (clients) {
     context.env.masterClientId = clients.pop().client_id;
   });
@@ -55,7 +73,7 @@ module.exports = {
   },
   clients: {
     getAll: function getAll() {
-      return request('clients');
+      return requestAll('clients');
     }
   },
   connections: {
@@ -78,7 +96,7 @@ module.exports = {
     },
 
     getAll: function getAll() {
-      return request('connections?strategy=oauth2');
+      return requestAll('connections', 'strategy=oauth2');
     },
 
     create: function create(data) {
