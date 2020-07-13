@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run build-dev && wt serve dist/custom-social-connections.js --port 3000",
     "webpack": "webpack --config webpack.ui.config.js && webpack --config webpack.wt.config.js",
-    "clean": "npm install clean-css-cli -g && rm -rf dist && mkdir -p dist/public && cleancss -o dist/public/custom-social-connections-1.2.2.min.css src/public/css/styles.css",
+    "clean": "npm install clean-css-cli -g && rm -rf dist && mkdir -p dist/public && cleancss -o dist/public/custom-social-connections-1.2.3.min.css src/public/css/styles.css",
     "build": "NODE_ENV=production npm run clean && NODE_ENV=production npm run webpack",
     "build-dev": "npm run clean && npm run webpack"
   },
