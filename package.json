@@ -8,7 +8,9 @@
     "webpack": "webpack --config webpack.ui.config.js && webpack --config webpack.wt.config.js",
     "clean": "npm install clean-css-cli -g && rm -rf dist && mkdir -p dist/public && cleancss -o dist/public/custom-social-connections-1.2.3.min.css src/public/css/styles.css",
     "build": "NODE_ENV=production npm run clean && NODE_ENV=production npm run webpack",
-    "build-dev": "npm run clean && npm run webpack"
+    "build-dev": "npm run clean && npm run webpack",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "keywords": [
     "auth0",
@@ -24,12 +26,13 @@
     "express": "4.14.0",
     "flux": "~2.0.1",
     "js-beautify": "^1.5.10",
-    "jsonwebtoken": "5.7.0",
+    "jsonwebtoken": "7.4.1",
     "keymirror": "~0.1.0",
     "object-assign": "2.0.0",
     "react": "~0.13.0",
     "react-codemirror": "~0.1.7",
-    "webtask-tools": "^2.0.1"
+    "webtask-tools": "^2.0.1",
+    "snyk": "^1.362.1"
   },
   "devDependencies": {
     "jade": "^1.11.0",
@@ -39,5 +42,6 @@
     "request-promise": "^3.0.0",
     "string-replace-webpack-plugin": "0.0.3",
     "webpack": "^1.12.9"
-  }
+  },
+  "snyk": true
 }
