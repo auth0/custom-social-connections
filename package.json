@@ -1,6 +1,6 @@
 {
   "name": "custom-social-connections",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "This application gives Auth0 customers the possibility to manage custom social connections in an easy way.",
   "main": "index.js",
   "scripts": {
