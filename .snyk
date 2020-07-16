@@ -1,0 +1,32 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.16.0
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:debug:20170905':
+    - auth0-oauth2-express > express > debug:
+        patched: '2020-07-16T18:48:22.387Z'
+    - auth0-oauth2-express > express > finalhandler > debug:
+        patched: '2020-07-16T18:48:22.387Z'
+    - auth0-oauth2-express > express > send > debug:
+        patched: '2020-07-16T18:48:22.387Z'
+    - auth0-oauth2-express > express > serve-static > send > debug:
+        patched: '2020-07-16T18:48:22.387Z'
+  'npm:mime:20170907':
+    - auth0-oauth2-express > express > send > mime:
+        patched: '2020-07-16T18:48:22.387Z'
+    - auth0-oauth2-express > express > serve-static > send > mime:
+        patched: '2020-07-16T18:48:22.387Z'
+  'npm:ms:20170412':
+    - auth0-oauth2-express > express > debug > ms:
+        patched: '2020-07-16T18:48:22.387Z'
+    - auth0-oauth2-express > express > send > ms:
+        patched: '2020-07-16T18:48:22.387Z'
+    - auth0-oauth2-express > express > finalhandler > debug > ms:
+        patched: '2020-07-16T18:48:22.387Z'
+    - auth0-oauth2-express > express > send > debug > ms:
+        patched: '2020-07-16T18:48:22.387Z'
+    - auth0-oauth2-express > express > serve-static > send > debug > ms:
+        patched: '2020-07-16T18:48:22.387Z'
+    - auth0-oauth2-express > express > serve-static > send > ms:
+        patched: '2020-07-16T18:48:22.387Z'
