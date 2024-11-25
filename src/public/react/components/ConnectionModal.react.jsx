@@ -22,8 +22,16 @@ var ConnectionModal = React.createClass({
       connection:     this.props.connection || {strategy:'oauth2', options: {scripts: {
         fetchUserProfile: [
                           'function(accessToken, ctx, cb) {',
-                          ' // call oauth2 APIwith the accesstoken and create the profile',
-                          ' cb(null, profile);',
+                          '  var url = \'https://oauth2provider.com/oauth/authorize\'; // TODO replace with actual url',
+                          '  request.get(url, {',
+                          '    headers: { Authorization: \'Bearer \' + accessToken },',
+                          '    json: true',
+                          '  }, function(err, resp, profile) {',
+                          '    if (err) return cb(err);',
+                          '    if (resp.statusCode !== 200) return cb(new Error(\'StatusCode: \' + resp.statusCode));',
+                          '    profile.user_id = profile.id;',
+                          '    cb(null, profile);',
+                          '   });',
                           '}'
                           ].join('\n')
       }}, enabled_clients: undefined},
