@@ -23,7 +23,7 @@
     "codemirror": "^5.8.0",
     "express": "4.14.0",
     "flux": "~2.0.1",
-    "js-beautify": "^1.5.10",
+    "js-beautify": "^1.14.1",
     "jsonwebtoken": "5.7.0",
     "keymirror": "~0.1.0",
     "object-assign": "2.0.0",
