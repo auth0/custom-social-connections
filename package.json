@@ -18,18 +18,18 @@
   "author": "javier.centurion@auth0.com",
   "license": "MIT",
   "dependencies": {
-    "auth0-oauth2-express": "1.1.10",
+    "auth0-oauth2-express": "1.4.0",
     "classnames": "~2.1.3",
     "codemirror": "^5.58.2",
     "express": "4.14.0",
     "flux": "~2.0.1",
     "js-beautify": "^1.5.10",
-    "jsonwebtoken": "5.7.0",
+    "jsonwebtoken": "9.0.2",
     "keymirror": "~0.1.0",
     "object-assign": "2.0.0",
     "react": "~0.14.0",
     "react-codemirror": "~0.1.7",
-    "webtask-tools": "^2.0.1"
+    "webtask-tools": "^3.5.0"
   },
   "devDependencies": {
     "jade": "^1.11.0",
