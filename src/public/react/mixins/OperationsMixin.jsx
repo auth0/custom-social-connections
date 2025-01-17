@@ -116,12 +116,15 @@ var OperationsMixin = {
   _save: function (context) {
     var clients = this.state.applicationsForm.getSelectedClients();
     var connection = this.state.connectionForm.getConnection();
+    var paramsMap = this.state.authParamsMapForm.getParamMappings();
+
     var param = this.state.mode === '_create' ? connection.isShared : connection.id;
     var isTemplate = connection.isTemplate;
     var currentOptions = this.state.connection && this.state.connection.options || {};
 
     connection.options = Object.assign({}, currentOptions, connection.options);
     connection.enabled_clients = Object.keys(clients);
+    connection.options.authParamsMap = paramsMap;
     delete connection.id;
     delete connection.isShared;
     delete connection.isTemplate;
